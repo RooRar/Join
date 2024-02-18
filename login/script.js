@@ -52,6 +52,8 @@ async function includeHTML() {
 /** checks for login user profile picture settings */
 function changeProfileImage() {
     let profileImage = document.getElementById('profileImage');
+    if (!profileImage)
+        return;
     let userImg = JSON.parse(localStorage.getItem("user")) || [];
     profileImage.innerHTML = `${userImg["firstName"].charAt(0).toUpperCase()}${userImg["surname"].charAt(0).toUpperCase()}`;
     document.getElementById('profileImage').style.background = `${userImg["background"]}`;
@@ -59,19 +61,19 @@ function changeProfileImage() {
 
 /** changes background of current page */
 function changeFocusNav() {
-    if (window.location.href.includes("contacts.html")) {
+    if (window.location.href.includes("contacts.html") && document.getElementById('contactsNav')) {
         document.getElementById('contactsNav').style.background = "#091931";
     }
-    else if (window.location.href.includes("summary.html")) {
+    else if (window.location.href.includes("summary.html") && document.getElementById('summaryNav')) {
         document.getElementById('summaryNav').style.background = "#091931";
     }
-    else if (window.location.href.includes("legal.html")) {
+    else if (window.location.href.includes("legal.html") && document.getElementById('legalNav')) {
         document.getElementById('legalNav').style.background = "#091931";
     }
-    else if (window.location.href.includes("add_task.html")) {
+    else if (window.location.href.includes("add_task.html") && document.getElementById('addTaskNav')) {
         document.getElementById('addTaskNav').style.background = "#091931";
     }
-    else if (window.location.href.includes("board.html")) {
+    else if (window.location.href.includes("board.html") && document.getElementById('boardNav')) {
         document.getElementById('boardNav').style.background = "#091931";
     }
 }

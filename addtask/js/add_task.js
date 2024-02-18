@@ -7,9 +7,16 @@ let color;
 let currentPrio;
 let currentId;
 let currentStatusTemp;
+let user = JSON.parse(localStorage.getItem("user")) || [];
 
 /** loads contacts of database */
-load();
+loadAll().then(console.log("all loaded."));
+
+async function loadAll() {
+  await init();
+  getTasksId();
+  renderAssignToList();
+}
 
 /** creates a random task id */
 function getTasksId() {
@@ -214,19 +221,29 @@ function openCategoryList() {
   document.getElementById("categoryList").style = `border-top: none`;
 }
 
-/** opens "assign to" list */
-function openAssignToList() {
-  closeCategoryList();
+function renderAssignToList() {
   document.getElementById("assignToContainer").innerHTML = openAssignToListHtml();
-  document.getElementById("AssignToList").classList.remove("d-none");
-  document.getElementById("closedAssingToInput").classList.add("border-drop-down");
   renderAddTaskContacts();
 }
 
 /** close "assign to" list */
 function closeAssignList() {
-  document.getElementById("assignToContainer").innerHTML =
-    closeAssignListHtml();
+  if (!document.getElementById("AssignToList").classList.contains("d-none")) {
+    toggleAssignList();
+  }
+}
+
+/** opens "assign to" list */
+function openAssignToList() {
+  closeCategoryList();
+  document.getElementById("AssignToList").classList.remove("d-none");
+  document.getElementById("closedAssingToInput").classList.add("border-drop-down");
+}
+
+/** toggle "assign to" list */
+function toggleAssignList() {
+  document.getElementById("AssignToList").classList.toggle("d-none");
+  document.getElementById("assignToListDropDownIcon").classList.toggle("rotate90deg");
 }
 
 /** close "category" list */
@@ -305,8 +322,6 @@ function renderNoAssignToContacts(contact) {
     }
   }
 }
-
-let user = JSON.parse(localStorage.getItem("user")) || [];
 
 /** display all contacts in assign to list */
 function renderAllContacts() {
@@ -387,22 +402,6 @@ function assignContactToYou(firstName, surname) {
  */
 function newSubTaskValue(newSubtask) {
   subTask.push(newSubtask);
-}
-
-/** loads contacts of database */
-function load() {
-  let contactsASText = backend.getItem("contactsASText");
-
-  if (contactsASText) {
-    contacts = JSON.parse(contactsASText);
-  }
-}
-
-/** loads tasks of database */
-async function loadTasks() {
-  await init();
-  tasks = JSON.parse(backend.getItem("tasks")) || [];
-  getTasksId();
 }
 
 /** adds task of database */

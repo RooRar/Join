@@ -99,10 +99,10 @@ function clearCategoryHtml() {
 
 function openAssignToListHtml() {
   return /*html*/ `
-  <div class="category" onclick="closeAssignList()" id="closedAssingToInput">
+  <div class="category" onclick="toggleAssignList()" id="closedAssingToInput">
   <input class="categoryInputField" type="text" placeholder="Assign to"/>
   <div class="dropdownContainer">
-  <img class="rotate90deg" src="../assets/img/dropdown.svg">
+  <img id="assignToListDropDownIcon" src="../assets/img/dropdown.svg">
 </div>
 </div>
 <div id="AssignToList" class="d-none categoryList">`;
