@@ -1,7 +1,7 @@
 /** sets the website before the login */
 async function initIndex() {
     await includeHTMLLogin();
-    setURL('https://roman-bartholemy.developerakademie.net/join/smallest_backend_ever');
+    setURL('http://roman-bartholemy.de/join/smallest_backend_ever');
     await downloadFromServer();
     contacts = JSON.parse(backend.getItem('contactsASText')) || [];
     tasks = JSON.parse(backend.getItem('tasks')) || [];
@@ -10,7 +10,7 @@ async function initIndex() {
 /** sets the website after the login */
 async function init() {
     await includeHTML();
-    setURL('https://roman-bartholemy.developerakademie.net/join/smallest_backend_ever');
+    setURL('http://roman-bartholemy.de/join/smallest_backend_ever');
     await downloadFromServer();
     contacts = await JSON.parse(backend.getItem('contactsASText')) || [];
     tasks = await JSON.parse(backend.getItem('tasks')) || [];
