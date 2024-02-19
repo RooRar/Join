@@ -54,7 +54,7 @@ main {
 	font-size: 18px;
 	resize: none;
 	font-family: 'Inter';
-	padding-left: 10px;
+	padding: 10px;
 }
 
 textarea::-webkit-scrollbar {
@@ -301,6 +301,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 	margin-top: 10px;
 	margin-left: -200px;
 	border-radius: 20px;
+	z-index: 100;
 }
 
 .added-to-board img {
@@ -426,4 +427,8 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 .error {
 	border: red 2px solid;
+}
+
+.text {
+	margin-left: 3px;
 }

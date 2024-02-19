@@ -18,7 +18,7 @@
 }
 
 .editDescription {
-    padding: inherit;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -126,7 +126,9 @@
     font-weight: 700;
     font-size: 21px;
 }
-
+.text {
+	margin-left: 3px;
+}
 @media (max-height: 700px) {
     .okButton {
         bottom: 5px;
