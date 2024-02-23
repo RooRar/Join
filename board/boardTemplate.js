@@ -96,13 +96,13 @@ function openCardHtml() {
         `;
 }
 
-function openCardAssingToHtml(i) {
+function openCardAssingToHtml(contact) {
   return `
         <div class="align-center">
             <div>
                 <p class="contact contact-height" style="background-color:${contactColor}">${contactChar}</p>
             </div>
-            <p class="open-task-card-name">${currentTask["contact"][i]["firstName"]} ${currentTask["contact"][i]["surname"]}</p>
+            <p class="open-task-card-name">${contact["firstName"]} ${contact["surname"]}</p>
         </div>
         `;
 }
@@ -197,9 +197,7 @@ function editCardHtmlTemplate(id) {
           <p class="text">Assign to</p>
           <div onclick="event.stopPropagation()" id="assignToContainerEdit" class="categoryContainer">
             <div class="category" onclick="openAssignToListEdit()" id="assignToInputEdit">
-              
-                <input class="categoryInputField" type="text" placeholder="Assign to" readonly />
-              
+              <input class="categoryInputField" type="text" placeholder="Assign to" readonly />
               <div>
                 <img src="../assets/img/dropdown.svg" />
               </div>
@@ -208,11 +206,7 @@ function editCardHtmlTemplate(id) {
           </div>
         </div>
       </div>
-  
-        <div class="profileImgEdit" id="profileImgEdit">
-        
-        </div>
-  
+      <div class="profileImgEdit" id="profileImgEdit"></div>
         <button type="submit" class="okButton"><span>Ok</span><img src="../assets/img/create.png"></button>
       </div>
     </form>
@@ -221,22 +215,18 @@ function editCardHtmlTemplate(id) {
       `;
 }
 
-function renderContactsEditHtml(contact, i) {
+function renderContactsEditHtml(contact,checkboxState) {
   return ` 
-    <div onclick="assignContactToEdit('${contact["firstName"]}','${contact["surname"]}','${i}')" id="${i}-edit" class="assign-to-box" >
+    <div onclick="UserAssignSelectionChanged('${contact["id"]}')" id="${contact["id"]}-edit" class="assign-to-box" >
       ${contact["firstName"]} ${contact["surname"]}
-      <input id="${i}-input" type="checkbox" >
+      <input id="${contact["id"]}-input" type="checkbox" ${checkboxState}>
     </div>`;
 }
 
 function openAssignToListEditHtml() {
   return /*html*/ `
-        <div class="category" onclick="closeAssignListEdit()" id="closedAssingToInputEdit">
-        <input
-            class="categoryInputField"
-            type="text"
-            placeholder="Assign to"
-          />
+      <div class="category" onclick="closeAssignListEdit()" id="closedAssingToInputEdit">
+        <input class="categoryInputField" type="text" placeholder="Assign to"/>
         <img class="rotate90deg" src="../assets/img/dropdown.svg">
       </div>
       <div id="AssignToListEdit" class="d-none categoryList">`;

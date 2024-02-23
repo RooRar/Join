@@ -32,7 +32,7 @@ async function load() {
   let contactsASText = await backend.getItem("contactsASText");
 
   if (contactsASText) {
-    contacts = JSON.parse(contactsASText);
+    contacts = await JSON.parse(contactsASText);
   }
 }
 

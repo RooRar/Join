@@ -2,6 +2,7 @@ let contacts = [];
 let letters = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
 let guestUser =
 {
+    id: 'xxxx-xxxx-xxx-xxxx',
     firstName: 'Ghost',
     surname: 'Guest',
     mail: 'test@test.test',
@@ -116,6 +117,7 @@ async function addContact() {
  */
 async function ifAddContactCorrect(firstName, surname, mail, phone) {
     contacts.push({
+        "id": getNewId(),
         "firstName": firstName.charAt(0).toUpperCase() + firstName.slice(1),
         "surname": surname.charAt(0).toUpperCase() + surname.slice(1),
         "mail": mail,
@@ -164,6 +166,7 @@ async function ifMailDoesNotExist(firstName, surname, mail, phone, j) {
     contacts[j]["mail"] = mail;
     contacts[j]["phone"] = phone;
 
+
     closeEditSaveDeleteContactContainer();
     await save();
     await renderContacts();
@@ -191,6 +194,7 @@ async function deleteContact(j) {
 /** if user deleted his own contact, current user changes to guest user */
 function changeUserToGuestUser() {
     user = {
+        id: 'xxxx-xxxx-xxx-xxxx',
         firstName: 'Ghost',
         surname: 'Guest',
         mail: 'test@test.test',
@@ -382,8 +386,7 @@ async function save() {
 /** loads contacts of database */
 async function load() {
     let contactsASText = await backend.getItem('contactsASText');
-
     if (contactsASText) {
-        contacts = JSON.parse(contactsASText);
+        contacts = await JSON.parse(contactsASText);
     }
 }

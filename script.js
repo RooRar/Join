@@ -1,18 +1,19 @@
 async function initIndex() {
     await includeHTMLLogin();
-    setURL('https://roman-bartholemy.developerakademie.net/join');
-    await downloadFromServer();
-    contacts = JSON.parse(backend.getItem('contactsASText')) || [];
-    tasks = JSON.parse(backend.getItem('tasks')) || [];
+    await getDataFromBackend();
 }
 
 async function init() {
+    await getDataFromBackend();
     await includeHTML();
-    setURL('https://roman-bartholemy.developerakademie.net/join');
+}
+
+async function getDataFromBackend() {
+    setURL('http://roman-bartholemy.de/join/smallest_backend_ever');
     await downloadFromServer();
-    contacts = await JSON.parse(backend.getItem('contactsASText')) || [];
-    tasks = await JSON.parse(backend.getItem('tasks')) || [];
-    subTasksFinish = await JSON.parse(backend.getItem('subTasks')) || [];
+    contacts = await JSON.parse(await backend.getItem('contactsASText')) || [];
+    tasks = await JSON.parse(await backend.getItem('tasks')) || [];
+    subTasksFinish = await JSON.parse(await backend.getItem('subTasks')) || [];
 }
 
 async function includeHTMLLogin() {
@@ -41,15 +42,23 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
-    changeProfileImage();
+    await changeProfileImage();
     changeFocusNav();
 }
 
-function changeProfileImage() {
+async function changeProfileImage() {
     let profileImage = document.getElementById('profileImage');
-    let userImg = JSON.parse(localStorage.getItem("user")) || [];
+    let userImg = await JSON.parse(localStorage.getItem("user")) || [];
+    console.log(profileImage.innerHTML)
     profileImage.innerHTML = `${userImg["firstName"].charAt(0).toUpperCase()}${userImg["surname"].charAt(0).toUpperCase()}`;
     document.getElementById('profileImage').style.background = `${userImg["background"]}`;
+}
+
+function getNewId() {
+    return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
 }
 
 function changeFocusNav() {
@@ -70,6 +79,9 @@ function changeFocusNav() {
     }
 }
 
+function getContactById(contactId) {
+    return contacts.find(contact => contact.id == contactId);
+}
 function openLogoutOption() {
     if (window.matchMedia("(max-width: 900px)").matches) {
         document.getElementById('legalButton').classList.remove('dp-none');

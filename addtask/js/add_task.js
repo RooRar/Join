@@ -23,6 +23,27 @@ function getTasksId() {
   currentId = Math.random() + tasks.length;
 }
 
+/** displays all user images which are already assign to the task */
+function renderImgEdit() {
+
+  document.getElementById('profileImgEdit').innerHTML = ``;
+
+  contacts.forEach( contact => {
+    document.getElementById('profileImgEdit').innerHTML += `<div class="profilePictureEdit dp-none" id="profilePictureEdit-${contact.id}"></div>`;
+    let AssignedUserImage = document.getElementById(`profilePictureEdit-${contact.id}`);
+    
+    if (assignTo.findIndex(c => c.id == contact.id) > -1)
+      AssignedUserImage.classList.remove('dp-none');  
+
+    AssignedUserImage.style.background = contact.background;
+    AssignedUserImage.innerHTML = 
+    `<img onclick="deleteAssignUser('${contact.id}')" src="../assets/img/cancel.png">
+    <span>
+      ${contact["firstName"]?.charAt(0).toUpperCase() + contact["surname"]?.charAt(0).toUpperCase()}
+    </span>`;
+  });
+}
+
 /** disables past days in calendar */
 function disableDateinput() {
   var today = new Date().toISOString().split("T")[0];
@@ -355,21 +376,19 @@ function renderAddTaskContacts() {
  * @param {string} surname = surname of assign to contact
  * @param {id} i = id of contact
  */
-function assignContactTo(firstName, surname, i) {
-  if (document.getElementById(`${contacts[i]["mail"]}-input`).checked == false) {
-    document.getElementById(`${contacts[i]["mail"]}-input`).click();
-    assignTo.push({
-      firstName: firstName,
-      surname: surname,
-    });
-  } else if (document.getElementById(`${contacts[i]["mail"]}-input`).checked == true) {
-    for (let j = 0; j < assignTo.length; j++) {
-      if (assignTo[j]["firstName"] == firstName) {
-        document.getElementById(`${contacts[i]["mail"]}-input`).click();
-        assignTo.splice([j]);
-      }
-    }
+function assignContactTo(contactId) {
+  let contact = getContactById(contactId);
+  let assignUserCheckbox = document.getElementById(`${contactId}-input`);
+
+  if (!assignUserCheckbox.checked) {
+    assignUserCheckbox.checked = 'checked';
+    assignTo.push(contact);
+  } 
+  else {
+    assignTo.splice(assignTo.findIndex(aUser => aUser.id == contactId),1);
+    assignUserCheckbox.checked = '';
   }
+  renderImgEdit();
 }
 
 /**

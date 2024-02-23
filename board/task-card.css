@@ -13,6 +13,7 @@
 
 .text {
   font-size: 20px;
+  font-weight: 600;
 }
 
 .open-task-card-description {
@@ -22,6 +23,7 @@
 .task-card-open {
   position: relative;
   width: 600px;
+  max-height: fit-content;
   background-color: white;
   border-radius: 32px;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
@@ -53,7 +55,7 @@
 }
 
 .openedTaskCard {
-  padding: 0px 50px;
+  padding: 20px 50px;
 }
 
 .open-task-headline {

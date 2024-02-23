@@ -1,59 +1,67 @@
-let assignUser = [];
 let rightPrio;
-let currentIdEdit;
+let loadedTask;
 
 /**
  * open the edit card container for the task
  * @param {id} id = id of task
  */
-function editCardHtml(id) {
-  assignUser = [];
-  document.getElementById("openTaskCard").innerHTML = editCardHtmlTemplate(id);
-  loadCurrentTask(id);
+function editCardHtml(taskId) {
+  document.getElementById("openTaskCard").innerHTML = editCardHtmlTemplate(taskId);
+  loadTask(taskId);
 }
 
 /** displays all user images which are already assign to the task */
 async function renderImgEdit() {
-  for (let k = 0; k < currentIdEdit["contact"].length; k++) {
-    document.getElementById('profileImgEdit').innerHTML += `
-        <div class="profilePictureEdit" id="profilePictureEdit${k}"></div>`;
-    assignUser.push(await contacts.find(c => c.firstName == currentIdEdit["contact"][k]["firstName"]));
-  }
-  for (let l = 0; l < assignUser.length; l++) {
-    document.getElementById(`profilePictureEdit${l}`).style.background = `${assignUser[l]["background"]}`;
-    document.getElementById(`profilePictureEdit${l}`).innerHTML = `<img onclick="deleteAssignUser(${l})" src="../assets/img/cancel.png"><span>
-      ${assignUser[l]["firstName"].charAt(0).toUpperCase() +
-      assignUser[l]["surname"].charAt(0).toUpperCase()}</span>`;
-  }
+  
+  document.getElementById('profileImgEdit').innerHTML = ``;
+
+  contacts.forEach( contact => {
+    document.getElementById('profileImgEdit').innerHTML += `<div class="profilePictureEdit" id="profilePictureEdit-${contact.id}"></div>`;
+    let AssignedUserImage = document.getElementById(`profilePictureEdit-${contact.id}`);
+    
+    if (!UserIdIsAssigned(contact.id))
+      AssignedUserImage.classList.add('dp-none');  
+
+    AssignedUserImage.style.background = contact.background;
+    AssignedUserImage.innerHTML = 
+    `<img onclick="deleteAssignUser('${contact.id}')" src="../assets/img/cancel.png">
+    <span>
+      ${contact["firstName"]?.charAt(0).toUpperCase() + contact["surname"]?.charAt(0).toUpperCase()}
+    </span>`;
+  });
 }
 
 /**
  * deletes assign to contact out of task
- * @param {id} k = id of assign to contact
+ * @param {id} contactId = id of assign to contact
  */
-function deleteAssignUser(k) {
-  assignUser.splice([k], 1);
-  document.getElementById(`profilePictureEdit${k}`).classList.add('dp-none');
+function deleteAssignUser(contactId) {
+    loadedTask.contact.splice(loadedTask.contact.findIndex(usr => usr.id == contactId), 1);
+    document.getElementById(`profilePictureEdit-${contactId}`).classList.add('dp-none');  
 }
 
 /**
  * loads current task
- * @param {id} id = id of task
  */
-function loadCurrentTask(id) {
-  currentIdEdit = tasks.find((t) => t.id == id);
-  document.getElementById('input-title-edit').value = `${currentIdEdit["title"]}`;
-  document.getElementById('input-description-edit').value = `${currentIdEdit["description"]}`;
-  document.getElementById('input-date-edit').value = `${currentIdEdit["date"]}`;
+function loadTask(taskId) {
+  loadedTask = tasks.find((task) => task.id == taskId);
+  document.getElementById('input-title-edit').value = `${loadedTask.title}`;
+  document.getElementById('input-description-edit').value = `${loadedTask.description}`;
+  document.getElementById('input-date-edit').value = `${loadedTask.date}`;
   renderImgEdit();
-  if (currentIdEdit["prio"] == "urgent") {
-    ifPrioUrgent();
-  }
-  else if (currentIdEdit["prio"] == "medium") {
-    ifPrioMedium();
-  }
-  else if (currentIdEdit["prio"] == "low") {
-    ifPrioLow();
+
+  switch (loadedTask.prio) {
+    case 'urgent':
+      ifPrioUrgent();
+      break;
+    case 'medium':
+      ifPrioMedium();
+      break;
+    case 'low':
+      ifPrioLow();
+      break;
+    default:
+      console.log(`Error: ${loadedTask.prio} is no valid priority.`);
   }
 }
 
@@ -107,14 +115,12 @@ function getValuesFromInputsEdit(id) {
  * @param {id} id = id of task 
  */
 function editTask(title, description, date, id) {
-  currentIdEdit.title = title.value;
-  currentIdEdit.description = description.value;
-  currentIdEdit.date = date.value;
-  currentIdEdit.prio = rightPrio;
-  currentIdEdit.contact = assignUser;
+  loadedTask.title = title.value;
+  loadedTask.description = description.value;
+  loadedTask.date = date.value;
+  loadedTask.prio = rightPrio;
 
   addTasks();
-  assignUser = [];
   updateHtml();
   openCard(id);
 }
@@ -217,8 +223,7 @@ function takePrioEdit(prio) {
 
 /** opens assign to list container */
 function openAssignToListEdit() {
-  document.getElementById("assignToContainerEdit").innerHTML =
-    openAssignToListEditHtml();
+  document.getElementById("assignToContainerEdit").innerHTML = openAssignToListEditHtml();
   document.getElementById("AssignToListEdit").classList.remove("d-none");
   document.getElementById("closedAssingToInputEdit").classList.add("border-drop-down");
   renderAddTaskContactsEdit();
@@ -226,75 +231,40 @@ function openAssignToListEdit() {
 
 /** closes assign to list container */
 function closeAssignListEdit() {
-  document.getElementById("assignToContainerEdit").innerHTML =
-    closeAssignListEditHtml();
+  document.getElementById("assignToContainerEdit").innerHTML = closeAssignListEditHtml();
 }
 
 /** renders all contacts in edit card */
 function renderAddTaskContactsEdit() {
-  for (let i = 0; i < contacts.length; i++) {
-    let contact = contacts[i];
-    document.getElementById("AssignToListEdit").innerHTML +=
-      renderContactsEditHtml(contact, i);
-    for (let j = 0; j < assignUser.length; j++) {
-      if (document.getElementById(`${i}-edit`).innerText == `${assignUser[j]["firstName"]} ${assignUser[j]["surname"]}`) {
-        document.getElementById(`${i}-edit`).classList.add('dp-none');
-      }
+  document.getElementById("AssignToListEdit").innerHTML = ``;
+  contacts.forEach(contact => {
+    document.getElementById("AssignToListEdit").innerHTML += renderContactsEditHtml(contact,UserIdIsAssigned(contact.id) ? 'checked' : '');
+  });
+}
+
+function UserAssignSelectionChanged(contactId) {
+  let assignUserCheckbox = document.getElementById(`${contactId}-input`);
+
+    if (!assignUserCheckbox.checked){
+      loadedTask.contact.push(contacts.find(c => c.id == contactId));
+      assignUserCheckbox.checked = 'checked';
     }
-  }
-}
-
-/**
- * adds or remove contact of "assign to" list if checkbox filled or not
- * @param {string} firstName = first name of contact
- * @param {string} surname = surname of contact
- * @param {json} i = contact details
- */
-function assignContactToEdit(firstName, surname, i) {
-  if (document.getElementById(`${i}-input`).checked == false) {
-    ifCheckedFalse(firstName, surname, i);
-  }
-
-  else if (document.getElementById(`${i}-input`).checked == true) {
-    ifCheckedTrue();
-  }
-}
-
-/**
- * adds contact to "assign to" list
- * @param {string} firstName = first name of contact
- * @param {string} surname = surname of contact
- * @param {json} i = contact details
- */
-function ifCheckedFalse(firstName, surname, i) {
-  document.getElementById(`${i}-input`).click();
-  assignUser.push({
-    firstName: firstName,
-    surname: surname
-  },
-  );
-}
-
-/**
- * removes contact to "assign to" list
- * @param {string} firstName = first name of contact
- * @param {string} surname = surname of contact
- * @param {json} i = contact details
- */
-function ifCheckedTrue(firstName, surname, i) {
-  for (let j = 0; j < assignUser.length; j++) {
-    if (assignUser[j]["firstName"] == firstName && assignUser[j]["surname"] == surname) {
-      document.getElementById(`${i}-input`).click();
-      assignUser.splice([j]);
+    else {
+      loadedTask.contact.splice(loadedTask.contact.findIndex(aUser => aUser.id == contactId),1);
+      assignUserCheckbox.checked = '';
     }
-  }
+    renderImgEdit();
+}
+
+function UserIdIsAssigned(userId) {
+  return loadedTask.contact.findIndex(aUser => aUser.id == userId) > -1;
 }
 
 /** renders tasks and assign user */
 function renderTasksEdit() {
   for (let i = 0; i < tasks.length; i++) {
-    for (let k = 0; k < assignUser.length; k++) {
-      contactColor = assignUser[k]["background"];
+    for (let k = 0; k < loadedTask.contact.length; k++) {
+      contactColor = loadedTask.contact[k]["background"];
       document.getElementById("to do").innerHTML += taskCardHtml(i);
       renderArrays(i);
     }

@@ -4,7 +4,6 @@ body {
 	overflow-x: hidden;
 }
 
-
 main {
 	position: absolute;
 	left: 355px;
@@ -431,4 +430,56 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 .text {
 	margin-left: 3px;
+	font-weight: 600;
+}
+
+.profileImgEdit {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    width: 315px;
+    flex-wrap: wrap;
+    height: 53px;
+    overflow-y: auto;
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+.profileImgEdit::-webkit-scrollbar {
+    width: 3px;
+}
+
+.profileImgEdit::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.profileImgEdit::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.profileImgEdit::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.profilePictureEdit {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.profilePictureEdit img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 26px;
+    right: 12px;
+    cursor: pointer;
 }

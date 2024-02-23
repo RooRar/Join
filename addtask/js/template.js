@@ -125,9 +125,9 @@ function closeAssignListHtml() {
 
 function renderContactsHtml(contact, i) {
   return `
-  <div onclick="assignContactTo('${contact["firstName"]}','${contact["surname"]}','${i}')" id="${contact["mail"]}-add" class="assign-to-box" >
+  <div onclick="assignContactTo('${contact["id"]}')" id="${contact["mail"]}-add" class="assign-to-box" >
     ${contact["firstName"]} ${contact["surname"]}
-    <input type="checkbox" id="${contact["mail"]}-input" >
+    <input type="checkbox" id="${contact["id"]}-input" >
   </div>`;
 }
 

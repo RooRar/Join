@@ -45,11 +45,11 @@ function checkAssignTo() {
       "";
   } else {
     if (currentTask["contact"].length <= 3) {
-      for (let j = 0; j < currentTask["contact"].length; j++) {
-        getCharAtNull(j);
-        getContactColor(j);
+      currentTask.contact.forEach(c => {
+        getCharAtNull(c.id);
+        getContactColor(c.id);
         document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML += assignToHtml();
-      }
+      })
     } else {
       assignToBigger3();
     }
@@ -72,22 +72,21 @@ function assignToBigger3() {
  * gets the background color of the contact profile picture
  * @param {id} j = id of contact
  */
-function getContactColor(j) {
-  let contact = contacts.filter(
-    (c) => c.firstName == currentTask["contact"][j]["firstName"]
-  );
-  contactColor = contact[0]["background"];
+function getContactColor(contactId) {
+  let con = contacts.find( c => c.id == contactId);
+  contactColor = con.background;
 }
 
 /**
  * gets the first letters of the first and last name of the contact
  * @param {id} j = id of contact
  */
-function getCharAtNull(j) {
-  let firstName = currentTask["contact"][j]["firstName"];
-  let surname = currentTask["contact"][j]["surname"];
-  let firstNameChar = firstName.charAt(0).toUpperCase();
-  let surnameChar = surname.charAt(0).toUpperCase();
+function getCharAtNull(contactId) {
+  con = contacts.find(c => c.id == contactId)
+  let firstName = con.firstName;
+  let surname = con.surname;
+  let firstNameChar = firstName?.charAt(0).toUpperCase();
+  let surnameChar = surname?.charAt(0).toUpperCase();
   contactChar = firstNameChar + surnameChar;
 }
 
@@ -96,16 +95,15 @@ function getCharAtNull(j) {
  * @param {id} id = id of task
  */
 function openCard(id) {
-  document.getElementById("taskCardContainer").classList.remove("dnone");
   currentTask = tasks.find((t) => t.id == id);
+  document.getElementById("taskCardContainer").classList.remove("dnone");
   document.getElementById("openTaskCard").innerHTML = openCardHtml();
   getSubtaskForOpenedCard(id);
-  for (let i = 0; i < currentTask["contact"].length; i++) {
-    getCharAtNull(i);
-    getContactColor(i);
-    document.getElementById(`assingToCard${id}`).innerHTML +=
-      openCardAssingToHtml(i);
-  }
+  currentTask.contact.forEach(c => {
+    getCharAtNull(c.id);
+    getContactColor(c.id);
+    document.getElementById(`assingToCard${id}`).innerHTML += openCardAssingToHtml(c);
+  });
 }
 
 /** close task card */

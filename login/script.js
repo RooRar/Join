@@ -1,36 +1,3 @@
-/** sets the website before the login */
-async function initIndex() {
-    await includeHTMLLogin();
-    setURL('http://roman-bartholemy.de/join/smallest_backend_ever');
-    await downloadFromServer();
-    contacts = JSON.parse(backend.getItem('contactsASText')) || [];
-    tasks = JSON.parse(backend.getItem('tasks')) || [];
-}
-
-/** sets the website after the login */
-async function init() {
-    await includeHTML();
-    setURL('http://roman-bartholemy.de/join/smallest_backend_ever');
-    await downloadFromServer();
-    contacts = await JSON.parse(backend.getItem('contactsASText')) || [];
-    tasks = await JSON.parse(backend.getItem('tasks')) || [];
-    subTasksFinish = await JSON.parse(backend.getItem('subTasks')) || [];
-}
-
-/** loads database from server before the login */
-async function includeHTMLLogin() {
-    let includeElements = document.querySelectorAll('[w3-include-html]');
-    for (let i = 0; i < includeElements.length; i++) {
-        const element = includeElements[i];
-        file = element.getAttribute("w3-include-html"); // "includes/header.html"
-        let resp = await fetch(file);
-        if (resp.ok) {
-            element.innerHTML = await resp.text();
-        } else {
-            element.innerHTML = 'Page not found';
-        }
-    }
-}
 
 /** loads database from server after the login */
 async function includeHTML() {
