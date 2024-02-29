@@ -12,7 +12,7 @@
     <meta name="msapplication-TileColor" content="#ffffff"/>
     <meta name="theme-color" content="#ffffff"/>
     
-    <title>Add Task</title>
+    <title>Edit Task</title>
 
     <link rel="stylesheet" href="/shared/styles/base.css"/>
     <link rel="stylesheet" href="/shared/task/editTask.css"/>
@@ -20,18 +20,17 @@
     <link rel="stylesheet" href="/shared/styles/prios.css"/>
     <link rel="stylesheet" href="../headerNav/headerNav.css"/>
     <link rel="stylesheet" href="/shared/task/editTask.css"/>
-    <link rel="stylesheet" href="./add_task.css"/>
     <link rel="stylesheet" href="/shared/task/editTaskMedia.css"/>
-
+    
     <script src="/smallest_backend_ever/mini_backend.js"></script>
     <script src="/script.js"></script>
     <script src="/login/script.js"></script>
+    <script src="../board/editBoard.js"></script>
     <script src="/shared/task/editTask.js"></script>
   </head>
 
-
   <body onload="loadAll()" onclick="closeAssignList(); closeCategoryList()">
     <div w3-include-html="../headerNav/headerNav.html" class="header"></div>
-    <div w3-include-html="/shared/task/editTask.html" class="main"></div>
+    <div w3-include-html="/shared/task/editTask.html"  class="main"></div>
   </body>
 </html>

@@ -6,8 +6,8 @@ let loadedTask;
  * @param {id} id = id of task
  */
 function editCardHtml(taskId) {
-  document.getElementById("openTaskCard").innerHTML = editCardHtmlTemplate(taskId);
   loadTask(taskId);
+  //document.getElementById("openTaskCard").innerHTML = editCardHtmlTemplate(taskId);
 }
 
 /** displays all user images which are already assign to the task */
@@ -36,8 +36,9 @@ async function renderImgEdit() {
  * @param {id} contactId = id of assign to contact
  */
 function deleteAssignUser(contactId) {
-    loadedTask.contact.splice(loadedTask.contact.findIndex(usr => usr.id == contactId), 1);
-    document.getElementById(`profilePictureEdit-${contactId}`).classList.add('dp-none');  
+    assignTo.splice(assignTo.findIndex(usr => usr.id == contactId), 1);
+    renderImgEdit();
+    document.getElementById(`${contactId}-input`).checked = "";
 }
 
 /**
@@ -45,54 +46,40 @@ function deleteAssignUser(contactId) {
  */
 function loadTask(taskId) {
   loadedTask = tasks.find((task) => task.id == taskId);
-  document.getElementById('input-title-edit').value = `${loadedTask.title}`;
-  document.getElementById('input-description-edit').value = `${loadedTask.description}`;
-  document.getElementById('input-date-edit').value = `${loadedTask.date}`;
+  document.getElementById('input-title').value = `${loadedTask.title}`;
+  document.getElementById('input-description').value = `${loadedTask.description}`;
+  document.getElementById('input-date').value = `${loadedTask.date}`;
   renderImgEdit();
-
-  switch (loadedTask.prio) {
-    case 'urgent':
-      ifPrioUrgent();
-      break;
-    case 'medium':
-      ifPrioMedium();
-      break;
-    case 'low':
-      ifPrioLow();
-      break;
-    default:
-      console.log(`Error: ${loadedTask.prio} is no valid priority.`);
-  }
 }
 
 /** displays if prio is urgent */
 function ifPrioUrgent() {
   document.getElementById('urgent-edit').classList.add('urgent');
-  document.getElementById('urgent-img-edit').src = "../addtask/assets/img/urgent-white.svg";
+  document.getElementById('urgent-img-edit').src = "/assets/img/urgent-white.svg";
   document.getElementById('low-edit').classList.remove('low');
-  document.getElementById('low-img-edit').src = "../addtask/assets/img/prio-low.svg";
+  document.getElementById('low-img-edit').src = "/assets/img/prio-low.svg";
   document.getElementById('medium-edit').classList.remove('medium');
-  document.getElementById('medium-img-edit').src = "../addtask/assets/img/prio-medium.svg";
+  document.getElementById('medium-img-edit').src = "/assets/img/prio-medium.svg";
 }
 
 /** displays if prio is medium */
 function ifPrioMedium() {
   document.getElementById('medium-edit').classList.add('medium');
-  document.getElementById('medium-img-edit').src = "../addtask/assets/img/medium-white.svg";
+  document.getElementById('medium-img-edit').src = "/assets/img/medium-white.svg";
   document.getElementById('urgent-edit').classList.remove('urgent');
-  document.getElementById('urgent-img-edit').src = "../addtask/assets/img/prio-urgent.svg";
+  document.getElementById('urgent-img-edit').src = "/assets/img/prio-urgent.svg";
   document.getElementById('low-edit').classList.remove('low');
-  document.getElementById('low-img-edit').src = "../addtask/assets/img/prio-low.svg";
+  document.getElementById('low-img-edit').src = "/assets/img/prio-low.svg";
 }
 
 /** displays if prio is low */
 function ifPrioLow() {
   document.getElementById('low-edit').classList.add('low');
-  document.getElementById('low-img-edit').src = "../addtask/assets/img/low-white.svg";
+  document.getElementById('low-img-edit').src = "/assets/img/low-white.svg";
   document.getElementById('urgent-edit').classList.remove('urgent');
-  document.getElementById('urgent-img-edit').src = "../addtask/assets/img/prio-urgent.svg";
+  document.getElementById('urgent-img-edit').src = "/assets/img/prio-urgent.svg";
   document.getElementById('medium-edit').classList.remove('medium');
-  document.getElementById('medium-img-edit').src = "../addtask/assets/img/prio-medium.svg";
+  document.getElementById('medium-img-edit').src = "/assets/img/prio-medium.svg";
 }
 
 /**
@@ -176,7 +163,7 @@ function checkPrioEdit(newprio) {
  */
 function getPrioEdit(prio) {
   document.getElementById(prio + '-edit').classList.add(prio);
-  document.getElementById(`${prio}-img-edit`).src = `../addtask/assets/img/${prio}-white.svg`;
+  document.getElementById(`${prio}-img-edit`).src = `/assets/img/${prio}-white.svg`;
   if (document.getElementById(prio + '-edit') == document.getElementById('urgent-edit')) {
     ifPrioEditSameUrgent();
   }
@@ -191,25 +178,25 @@ function getPrioEdit(prio) {
 /** removes rest priority when urgent priority is pressed */
 function ifPrioEditSameUrgent() {
   document.getElementById('low-edit').classList.remove('low');
-  document.getElementById('low-img-edit').src = "../addtask/assets/img/prio-low.svg";
+  document.getElementById('low-img-edit').src = "/assets/img/prio-low.svg";
   document.getElementById('medium-edit').classList.remove('medium');
-  document.getElementById('medium-img-edit').src = "../addtask/assets/img/prio-medium.svg";
+  document.getElementById('medium-img-edit').src = "/assets/img/prio-medium.svg";
 }
 
 /** removes rest priority when medium priority is pressed */
 function ifPrioEditSameMedium() {
   document.getElementById('low-edit').classList.remove('low');
-  document.getElementById('low-img-edit').src = "../addtask/assets/img/prio-low.svg";
+  document.getElementById('low-img-edit').src = "/assets/img/prio-low.svg";
   document.getElementById('urgent-edit').classList.remove('urgent');
-  document.getElementById('urgent-img-edit').src = "../addtask/assets/img/prio-urgent.svg";
+  document.getElementById('urgent-img-edit').src = "/assets/img/prio-urgent.svg";
 }
 
 /** removes rest priority when low priority is pressed */
 function ifPrioEditSameLow() {
   document.getElementById('medium-edit').classList.remove('medium');
-  document.getElementById('medium-img-edit').src = "../addtask/assets/img/prio-medium.svg";
+  document.getElementById('medium-img-edit').src = "/assets/img/prio-medium.svg";
   document.getElementById('urgent-edit').classList.remove('urgent');
-  document.getElementById('urgent-img-edit').src = "../addtask/assets/img/prio-urgent.svg";
+  document.getElementById('urgent-img-edit').src = "/assets/img/prio-urgent.svg";
 }
 
 /**
@@ -218,7 +205,7 @@ function ifPrioEditSameLow() {
  */
 function takePrioEdit(prio) {
   document.getElementById(prio + '-edit').classList.remove(prio);
-  document.getElementById(`${prio}-img-edit`).src = `../addtask/assets/img/prio-${prio}.svg`;
+  document.getElementById(`${prio}-img-edit`).src = `/assets/img/prio-${prio}.svg`;
 }
 
 /** opens assign to list container */

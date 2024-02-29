@@ -1,0 +1,118 @@
+<main>
+    <div class="editTaskContent">
+      <div id="editTaskHeadlineText" class="popup-headline">
+        <h1>Add Task</h1>
+      </div>
+    <div class="contentContainer">
+      <form id="desktop" class="adding-todos" onsubmit="mustFields(); return false">
+        <div class="resp-headline">
+          <div class="resp-headline-child">
+            <button class="resp-create">
+              Create <img src="../assets/img/check.svg" />
+            </button>
+          </div>
+        </div>
+        <div class="adding-tasks">
+          <div class="section title">
+            <p class="text">Title</p>
+            <input class="task-board-input-fields" type="text" placeholder="Enter a Title" required id="input-title" maxlength="22" />
+          </div>
+          <div class="section description">
+            <p class="text">Description</p>
+            <textarea id="input-description" placeholder="Enter a Description" required minlength="3"></textarea>
+          </div>
+          <div class="section">
+            <p class="text">Category</p>
+            <div id="categoryListContainer" onclick="event.stopPropagation()" class="categoryContainer">
+              <div class="category" onclick="openCategoryList()" id="categoryInput">
+                <div class="categoryInputContainer">
+                  <input class="categoryInputField" type="text" placeholder="Enter a Category" id="category" readonly />
+                </div>
+                <div>
+                  <img id="categoryListDropDownIcon" src="/assets/img/dropdown.svg" />
+                </div>
+              </div>
+              <div id="categoryList" class="d-none categoryList">
+                <p class="text" onclick="newCategory()">New Category</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="section text">Assign to</p>
+            <div id="assignToContainer" onclick="event.stopPropagation()" class="categoryContainer">
+              <div class="category" onclick="toggleAssignList()" id="assingToInput">
+                <div>
+                  <input class="categoryInputField" type="text" placeholder="Assign to" readonly/>
+                </div>
+                <div>
+                  <img id="assignToListDropDownIcon" src="/assets/img/dropdown.svg">
+                </div>
+              </div>
+              <div id="AssignToList" class="d-none categoryList"></div>
+            </div>
+          </div>
+          <div class="profileImgEdit" id="profileImgEdit"></div>
+        </div>
+        <div class="line"></div>
+        <div class="adding-info">
+          <div class="date">
+            <p class="section text">Due date</p>
+            <input class="task-board-input-fields" type="date" id="input-date" name="input-date"
+              onclick="disableDateinput();" />
+          </div>
+          <div>
+            <p class="text">Priority</p>
+            <div class="prios" id="prios">
+              <div class="prio" id="urgent" onclick="addingPrio('urgent')">
+                <div class="d-flex">
+                  <span>Urgent</span>
+                  <img id="urgent-img" src="/assets/img/prio-urgent.svg" />
+                </div>
+              </div>
+              <div class="prio" id="medium" onclick="addingPrio('medium')">
+                <div class="d-flex">
+                  <span>Medium</span>
+                  <img id="medium-img" src="/assets/img/prio-medium.svg" />
+                </div>
+              </div>
+              <div class="prio" id="low" onclick="addingPrio('low')">
+                <div class="d-flex">
+                  <span>Low</span>
+                  <img id="low-img" src="/assets/img/prio-low.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+      </form>
+      <form onsubmit="createNewSubtask(); return false">
+        <div class="section subtask">
+          <p class="text">Subtasks</p>
+          <div class="subtask-input" id="addNewSubtask">
+            <input placeholder="Add new Subtasks" id="input-subTask" readonly onclick="addNewSubtask()" />
+            <img class="plus" src="/assets/img/plus.svg" onclick="addNewSubtask()" />
+          </div>
+          <div class="check">
+            <div class="subtasks" id="newSubtask"></div>
+          </div>
+          <span id="emptySubtask" class="error d-none">name a subtask</span>
+          <div id="addedToBoard" class="d-none">
+            <div class="added-to-board">
+              <span class="text">Task added to board</span>
+              <img src="../assets/img/board.svg" />
+            </div> 
+          </div>
+        </div>
+      </form>
+    </div>
+      <div class="buttons">
+        <button class="clear" onclick="clearAll()">
+          Clear <img src="/assets/img/clear.svg" />
+        </button>
+        <button class="create" type="submit">
+          Create Task<img src="/assets/img/check.svg" />
+        </button>
+      </div>
+    </div>
+    </div>
+  </main>

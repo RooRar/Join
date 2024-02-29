@@ -1,0 +1,36 @@
+
+::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  ::-webkit-scrollbar-button {
+    height: 30px;
+}
+
+
+@media (max-width: 900px) {
+
+.mainContent
+{
+    background-color: #F5F5F5;
+    width: 100%;
+    height: calc(100dvh - 80px - 79.02px);
+    position: absolute;
+    top: 80px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+}
+}

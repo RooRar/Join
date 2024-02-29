@@ -8,12 +8,11 @@ let subTasksFinish;
 /** render all tasks */
 async function renderTasks() {
   await init();
-  for (let i = 0; i < tasks.length; i++) {
-    currentTask = tasks[i];
-    document.getElementById(`${currentTask["status"]}`).innerHTML +=
-      taskCardHtml();
+  tasks.forEach( task => {
+    currentTask = task;
+    document.getElementById(`${currentTask["status"]}`).innerHTML += taskCardHtml();
     renderArrays();
-  }
+  });
 }
 
 /** display add task template */
@@ -30,19 +29,16 @@ function renderArrays() {
 
 /** displays the subtask length */
 function checkSubtask() {
-  for (let j = 0; j < currentTask["subTask"].length; j++) {
-    let calcWidth =
-      currentTask["subTaskFinish"] / currentTask["subTask"].length * 100;
-    document.getElementById(`subtaskContainer${currentTask["id"]}`).innerHTML =
-      subtaskHtml(calcWidth);
-  }
+  currentTask["subTask"].forEach(subTask => {
+    let calcWidth = currentTask["subTaskFinish"] / currentTask["subTask"].length * 100;
+    document.getElementById(`subtaskContainer${currentTask["id"]}`).innerHTML = subtaskHtml(calcWidth);
+  });
 }
 
 /** displays the assign to length */
 function checkAssignTo() {
   if (currentTask["contact"].length == 0) {
-    document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML =
-      "";
+    document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML = "";
   } else {
     if (currentTask["contact"].length <= 3) {
       currentTask.contact.forEach(c => {
@@ -97,18 +93,13 @@ function getCharAtNull(contactId) {
 function openCard(id) {
   currentTask = tasks.find((t) => t.id == id);
   document.getElementById("taskCardContainer").classList.remove("dnone");
-  document.getElementById("openTaskCard").innerHTML = openCardHtml();
-  getSubtaskForOpenedCard(id);
-  currentTask.contact.forEach(c => {
-    getCharAtNull(c.id);
-    getContactColor(c.id);
-    document.getElementById(`assingToCard${id}`).innerHTML += openCardAssingToHtml(c);
-  });
+  loadViewTask();
 }
 
 /** close task card */
 function closeCard() {
   document.getElementById("taskCardContainer").classList.add("dnone");
+  currentTask = '';
 }
 
 /**

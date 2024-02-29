@@ -13,7 +13,13 @@ async function getDataFromBackend() {
     await downloadFromServer();
     contacts = await JSON.parse(await backend.getItem('contactsASText')) || [];
     tasks = await JSON.parse(await backend.getItem('tasks')) || [];
+    categories = await JSON.parse(await backend.getItem('categories')) || [];
     subTasksFinish = await JSON.parse(await backend.getItem('subTasks')) || [];
+}
+
+async function setCategoriesToBackend(categories) {
+    await backend.setItem("categories", JSON.stringify(categories));
+    console.log(await JSON.parse(await backend.getItem('categories')));
 }
 
 async function includeHTMLLogin() {

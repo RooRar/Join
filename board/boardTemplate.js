@@ -74,7 +74,7 @@ function openCardHtml() {
             </div>
             <div class="text align-center">
                 <p><b>Priority:</b></p> <p class="${currentTask["prio"]} open-task-card-prio">${currentTask["prio"]} 
-                <img src="../addtask/assets/img/${currentTask["prio"]}-white.svg"></p>
+                <img src="/assets/img/${currentTask["prio"]}-white.svg"></p>
             </div>
             <div id="subtask">
                 <p class="text"><b>Subtask:</b></p>
@@ -146,72 +146,11 @@ function assignToBigger3Html() {
 
 function editCardHtmlTemplate(id) {
   return /*html*/`
-    <div onclick="closeAssignListEdit()" class="editCardContainer" >
+  <div onclick="closeAssignListEdit()" class="editCardContainer" >
     <div onclick="closeCard()" class="closeImgEdit"><img src="../assets/img/close.png"></div>
-    <div>
-    <form id="desktop" class="adding-todos" onsubmit="event.preventDefault(); getValuesFromInputsEdit(${id})">
-      
-      <div class="adding-tasks">
-        <div class="title">
-          <p class="text">Title</p>
-          <input class="task-board-input-fields" type="text" placeholder="Enter a Title" required id="input-title-edit"
-            maxlength="22" />
-        </div>
-  
-        <div class="description">
-          <p class="text">Description</p>
-          <textarea class="editDescription" id="input-description-edit" placeholder="Enter a Description" required minlength="3"></textarea>
-        </div>
-  
-        <div class="adding-info">
-        <div class="date">
-          <p class="text">Due date</p>
-          <input class="task-board-input-fields" type="date" id="input-date-edit" />
-        </div>     
-  
-        <p class="text">Prio</p>
-        <div class="prios">
-          <div class="prio" id="urgent-edit" onclick="addingPrioEdit('urgent')">
-            <div class="d-flex">
-              <p>Urgent</p>
-              <img id="urgent-img-edit" src="../addtask/assets/img/prio-urgent.svg" />
-            </div>
-          </div>
-  
-          <div class="prio" id="medium-edit" onclick="addingPrioEdit('medium')">
-            <div class="d-flex">
-              <p>Medium</p>
-              <img id="medium-img-edit" src="../addtask/assets/img/prio-medium.svg" />
-            </div>
-          </div>
-  
-          <div class="prio" id="low-edit" onclick="addingPrioEdit('low')">
-            <div class="d-flex">
-              <p>Low</p>
-              <img id="low-img-edit" src="../addtask/assets/img/prio-low.svg" />
-            </div>
-          </div>
-        </div>
-  
-        <div>
-          <p class="text">Assign to</p>
-          <div onclick="event.stopPropagation()" id="assignToContainerEdit" class="categoryContainer">
-            <div class="category" onclick="openAssignToListEdit()" id="assignToInputEdit">
-              <input class="categoryInputField" type="text" placeholder="Assign to" readonly />
-              <div>
-                <img src="../assets/img/dropdown.svg" />
-              </div>
-            </div>
-            <div id="assignToListEdit" class="d-none categoryList"></div>
-          </div>
-        </div>
-      </div>
-      <div class="profileImgEdit" id="profileImgEdit"></div>
-        <button type="submit" class="okButton"><span>Ok</span><img src="../assets/img/create.png"></button>
-      </div>
-    </form>
-  </div>
+      <div w3-include-html="/shared/task/editTask.html"></div>
     </div>
+  </div>
       `;
 }
 
@@ -225,11 +164,11 @@ function renderContactsEditHtml(contact,checkboxState) {
 
 function openAssignToListEditHtml() {
   return /*html*/ `
-      <div class="category" onclick="closeAssignListEdit()" id="closedAssingToInputEdit">
-        <input class="categoryInputField" type="text" placeholder="Assign to"/>
-        <img class="rotate90deg" src="../assets/img/dropdown.svg">
-      </div>
-      <div id="AssignToListEdit" class="d-none categoryList">`;
+    <div class="category" onclick="closeAssignListEdit()" id="closedAssingToInputEdit">
+      <input class="categoryInputField" type="text" placeholder="Assign to"/>
+      <img class="rotate90deg" src="/assets/img/dropdown.svg">
+    </div>
+    <div id="AssignToListEdit" class="d-none categoryList">`;
 }
 
 function closeAssignListEditHtml() {
@@ -239,7 +178,7 @@ function closeAssignListEditHtml() {
             <input class="categoryInputField" type="text" placeholder="Assign to"/>
           </div>
           <div>
-            <img src="../assets/img/dropdown.svg" />
+            <img src="/assets/img/dropdown.svg" />
           </div>
         </div>
         <div id="assignToListEdit" class="d-none categoryList"></div>

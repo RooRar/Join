@@ -1,0 +1,131 @@
+h1 {
+    font-size: 40px;
+}
+
+#taskTitle {
+    color: black;
+}
+
+.taskDetailsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#taskTitle {
+    text-align: center;
+}
+
+#taskCategory {
+    padding: 10px;
+    width: 100px;
+    border-radius: 18px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+
+.taskViewHeadline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 15px;
+    background: rgba(246, 247, 248, 1);
+}
+
+.taskProperty {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    span {
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.taskPropertyContainer {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;    
+    margin-bottom: 10px;
+}
+
+#taskPriority {
+    width: 86px;
+    height: 23px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+#taskAssignTo {
+    display: flex;
+    gap: 5px;
+
+    span {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    }
+}
+
+.line {
+	height: 250px;
+    width: 3px;
+    align-self: center;
+	box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.assignedUser {
+    position: relative;
+    width: 39px;
+    height: 39px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px !important;
+}
+
+.assignedUser img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 26px;
+    right: 12px;
+    cursor: pointer;
+}
+
+.taskDetailsbuttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-right: 45px;
+    margin-bottom: 30px;
+    height: 35px;
+}
+
+.taskDetailsButton{
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+
+.taskPropertyContainer {
+    flex-direction: column;
+  }
+.taskViewHeadline {
+    flex-direction: column;
+
+}
+}

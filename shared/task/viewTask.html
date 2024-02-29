@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/fonts/fonts.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+    <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5"/>
+    <meta name="msapplication-TileColor" content="#ffffff"/>
+    <meta name="theme-color" content="#ffffff"/>
+    
+    <title>Task Details</title>
+
+    <link rel="stylesheet" href="/shared/task/viewTask.css"/>
+    <link rel="stylesheet" href="/shared/styles/color.css"/>
+    <link rel="stylesheet" href="/shared/styles/prios.css"/>
+    <link rel="stylesheet" href="/shared/task/editTaskMedia.css"/>
+    <link rel="stylesheet" href="../headerNav/headerNav.css"/>
+    <link rel="stylesheet" href="/shared/task/viewTask.css"/>
+
+    <script src="/smallest_backend_ever/mini_backend.js"></script>
+    <script src="/script.js"></script>
+    <script src="/login/script.js"></script>
+    <script src="/shared/task/viewTask.js"></script>
+  </head>
+
+
+  <body onload="loadViewTask()" onclick="closeAssignList(); closeCategoryList()">
+    <div w3-include-html="../headerNav/headerNav.html" class="header"></div>
+<main>
+    <div class="editTaskContent">
+        <div class="popup-headline">
+            <h1>Task Details</h1>
+        </div>
+        <div class="taskDetailsContainer">
+            <div class="taskViewHeadline">
+                <h1><div id="taskTitle"></div></h1>
+                <div id="taskCategory"></div>
+            </div>
+        </div>
+        <div class="taskPropertyContainer">
+        <div>
+        <div class="taskProperty">
+            <span>Description:</span>
+            <div id="taskDescription"></div>
+        </div>
+        <div class="taskProperty">
+            <span>Id:</span>
+            <div id="taskId"></div>
+        </div>
+        <div class="taskProperty">
+            <span>Subtasks:</span>
+            <div id="taskSubtask"></div>
+        </div>
+        </div>
+        <div class="line"></div>
+        <div>
+        <div class="taskProperty">
+            <span>Priority:</span>
+            <div id="taskPriority">
+            </div>
+        </div>
+        <div class="taskProperty">
+            <span>Due Date:</span>
+            <div id="taskDueDate"></div>
+        </div>
+        <div class="taskProperty">
+            <span>Assigned To::</span>
+            <div id="taskAssignTo"></div>
+        </div>
+    </div>
+        </div>
+        <div class="taskDetailsbuttons">
+            <img title="Edit task" id="taskDetailsEditButton" class="taskDetailsButton" src="../assets/img/editResponsive.png">
+            <img src="../assets/img/trash.png" title="Delete contact" class="taskDetailsButton" id="taskDetailsTrashButton">
+        </div>
+    
+    </div>
+</div>
+</main>
+
+
+</body>
+</html>

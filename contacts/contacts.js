@@ -243,46 +243,13 @@ function closeEditSaveDeleteContactContainer() {
 
 /** open add task container */
 function openAddTaskContainer(status) {
-    currentStatusTemp = status;
-    if (matchMedia('only screen and (max-width: 900px)').matches) {
-        document.getElementById('closeAddTaskContainer').classList.remove('bg');
-        document.getElementById('header').classList.add('dp-none');
-    }
-    subTask = [];
-    document.getElementById("newSubtask").innerHTML = '';
-    ifPrioSet();
-    document.getElementById('taskBoard').classList.remove('d-none');
+    currentStatus = status;
     document.getElementById('addTaskContainerContacts').classList.remove('dp-none');
     document.getElementById('taskBoard').classList.remove('moveContainerOutMedia');
 }
-
-/** checks if prio is set in add task container */
-function ifPrioSet() {
-    if (document.getElementById('urgent').classList.contains("urgent")) {
-        setPrio("urgent");
-    }
-    else if (document.getElementById('medium').classList.contains("medium")) {
-        setPrio("medium");
-    }
-    else if (document.getElementById('low').classList.contains("low")) {
-        setPrio("low");
-    }
-    prios = [];
-}
-
-/**
- * sets right priority of "urgent", "medium" or "low" 
- * @param {string} prio = string of "urgent", "medium" or "low" 
- */
-function setPrio(prio) {
-    document.getElementById(`${prio}`).classList.remove(`${prio}`);
-    document.getElementById(`${prio}-img`).src = `../addtask/assets/img/prio-${prio}.svg`;
-}
-
 /** close add task container */
 function closeAddTaskContainer() {
     if (matchMedia('only screen and (max-width: 900px)').matches) {
-        document.getElementById('header').classList.remove('dp-none');
         document.getElementById('addTaskContainerContacts').classList.add('dp-none');
         document.getElementById('closeAddTaskContainer').classList.add('bg');
     }
@@ -294,7 +261,6 @@ function closeAddTaskContainer() {
         }, 400);
     }
 }
-
 /**
  * changes the contact image of the contact in the detail contact page
  * @param {id} j = id of contact 
