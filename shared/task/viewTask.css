@@ -113,19 +113,28 @@ h1 {
     margin-right: 45px;
     margin-bottom: 30px;
     height: 35px;
+    width: auto;
 }
 
 .taskDetailsButton{
     cursor: pointer;
 }
 
+.taskDetailsButton:hover {
+    filter: invert(71%) sepia(85%) saturate(3628%) hue-rotate(164deg) brightness(97%) contrast(82%);
+}
+
 @media (max-width: 900px) {
 
-.taskPropertyContainer {
-    flex-direction: column;
-  }
-.taskViewHeadline {
-    flex-direction: column;
+    .taskPropertyContainer {
+        flex-direction: column;
+    }
 
-}
+    .taskProperty {
+        padding: 10px;
+    }
+
+    .taskViewHeadline {
+        flex-direction: column;
+    }
 }

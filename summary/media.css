@@ -1,23 +1,4 @@
-@media(max-width: 1300px) {
-    #summary {
-        top: 100px;
-        left: 355px;
-    }
-
-    .headline {
-        margin-bottom: 60px;
-    }
-}
-
 @media(max-width: 1200px) {
-    #summary {
-        left: 355px;
-    }
-
-    .headline {
-        margin-bottom: 35px;
-    }
-
     .headlineText {
         font-size: 45px;
     }
@@ -57,22 +38,15 @@
         font-size: 35px;
     }
 }
-
-@media(max-width: 980px) {
-    #summary {
-        left: 260px;
-    }
-}
-
 @media(max-width: 900px) {
+    #summary {
+        margin-left: 0px;
+        margin-top: 0px;
+    } 
+
     .fadeOut {
         opacity: 0;
         transition: opacity 2.5s ease-in;
-    }
-
-    header {
-        left: 0 !important;
-        width: 100% !important;
     }
 
     .headline {
@@ -80,7 +54,6 @@
         width: 360px;
         align-self: center;
         align-items: flex-start;
-        margin-bottom: 0px;
     }
 
     .headlineTopText {
@@ -89,7 +62,6 @@
 
     .headlineText {
         font-size: 47px;
-        margin-bottom: 20px;
     }
 
     .headlineSubText {
@@ -103,11 +75,6 @@
         margin-right: 0px;
         transform: rotate(-90deg);
         order: 2;
-    }
-
-    #summary {
-        left: 0px;
-        width: -webkit-fill-available;
     }
 
     .dataRow {
@@ -166,11 +133,6 @@
         margin-bottom: 8px;
     }
 
-    .rectangleButton {
-        width: 170.5px;
-        height: 110px;
-    }
-
     .rectangleButton img {
         width: 40px;
         height: 40px;
@@ -188,12 +150,10 @@
 
     .headlineTopText {
         font-size: 14px;
-        margin-bottom: 5px;
     }
 
     .headlineText {
         font-size: 38px;
-        margin-bottom: 10px;
     }
 
     .headlineSubText {
@@ -207,8 +167,6 @@
         border-radius: 0;
         margin-left: 0;
         transform: rotate(-180deg);
-        margin-top: 10px;
-        margin-bottom: 10px;
     }
 
     .dataRow {
@@ -224,9 +182,5 @@
         width: 305px;
         margin-top: 10px;
         margin-bottom: 10px;
-    }
-
-    .rectangleButton {
-        width: 145px;
     }
 }

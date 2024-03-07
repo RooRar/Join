@@ -2,20 +2,20 @@
 <span class="signUpHeadline">Sign up</span>
 <div class="signUpLine"></div>
 <form class="signUpInputContainer" onsubmit="event.preventDefault(); signUp();">
-    <input id="signUpFirstNameInput" placeholder="First name" required maxlength="10" type="text"
+    <input class="inputHover" id="signUpFirstNameInput" placeholder="First name" required maxlength="10" type="text"
         onkeydown="return /[a-z]/i.test(event.key)"
         style="background-image: url(./img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-    <input id="signUpSurnameInput" placeholder="Surname" required maxlength="12" type="text"
+    <input class="inputHover" id="signUpSurnameInput" placeholder="Surname" required maxlength="12" type="text"
         onkeydown="return /[a-z]/i.test(event.key)"
         style="background-image: url(./img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-    <input id="signUpMailInput" placeholder="Email" required maxlength="40" type="email"
+    <input class="inputHover" id="signUpMailInput" placeholder="Email" required maxlength="40" type="email"
         style="background-image: url(./img/emailInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
     <div class="signUpFieldContainer">
-        <input id="signUpPasswordInput" required type="password" placeholder="Password"
+        <input class="inputHover" id="signUpPasswordInput" required type="password" placeholder="Password"
             onkeyup="togglePasswordImageSignUp()">
         <img id="signUpPasswordImage" class="signUpFieldImage pointerEventsNone" src="./img/lock.png"
             onclick="togglePasswordVisibilitySignUp()">
     </div>
-    <button type="submit" class="buttonContainer"><span>Sign up</span></button>
+    <button type="submit" class="buttonContainer primary-Button"><span>Sign up</span></button>
     <span class="error dp-none" id="emailIsAlreadyExistingSignUp">Email is already existing</span>
 </form>

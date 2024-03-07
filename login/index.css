@@ -2,16 +2,18 @@ body {
     margin: 0;
     font-family: 'Inter';
     font-style: normal;
+    display: flex;
 }
 
 #signUpButton {
     display: flex;
-    position: absolute;
-    top: 67px;
-    right: 114px;
+    grid-area: 1 / 2 / 1 / 4;
+    margin: 10px;
     gap: 35px;
     justify-content: center;
     align-items: center;
+    justify-content: flex-end;
+    justify-self: flex-end;
 }
 
 .signInText {
@@ -44,24 +46,29 @@ body {
 }
 
 .loginArea {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 89px auto 89px;
+    grid-template-rows: 89px repeat(1, 1fr);
     align-items: center;
+    justify-items: center;
     height: 100dvh;
 }
 
 #loginBox {
+    grid-area: 2 / 2 / 2 / 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 23px 0px;
-    position: absolute;
-    top: 25dvh;
-    width: 652px;
-    height: 513px;
+    padding: 23px 50px;
+    max-width: 570px;
+    width: 100%;
     background: #FFFFFF;
-    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
     border-radius: 30px;
+
+    form {
+        width: 100%;
+    }
 }
 
 .loginHeadlineText {
@@ -84,12 +91,6 @@ body {
     display: flex;
 }
 
-.inputFieldImageContainer {
-    width: 22px;
-    display: flex;
-    align-items: center;
-}
-
 .inputFieldImage {
     margin-bottom: 8px;
     margin-left: -40px;
@@ -99,15 +100,14 @@ body {
 
 .loginInputField {
     box-sizing: border-box;
-    padding: 13px 21px;
-    width: 422px;
-    height: 51px;
+    padding: 13px 10px;
     background-color: #FFFFFF;
     border: 1px solid #D1D1D1;
     border-radius: 10px;
     margin-bottom: 8px;
     font-size: 21px;
     line-height: 120%;
+    width: 100%;
 }
 
 .error {
@@ -133,7 +133,6 @@ body {
     color: rgb(40, 171, 226);
     font-size: 14px;
     cursor: pointer;
-    text-decoration: none;
     display: flex;
     align-items: center;
 }
@@ -160,7 +159,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 35px;
-    padding-top: 35px;
+    margin-top: 35px;
     justify-content: center;
 }
 

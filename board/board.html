@@ -16,12 +16,12 @@
   <link rel="stylesheet" href="../headerNav/headerNav.css" />
   <link rel="stylesheet" href="/shared/styles/color.css" />
   <link rel="stylesheet" href="/shared/styles/prios.css" />
-  <link rel="stylesheet" href="/shared/task/editTaskMedia.css" />
   <link rel="stylesheet" href="/shared/task/editTask.css" />
   <link rel="stylesheet" href="/shared/task/viewTask.css" />
   <link rel="stylesheet" href="./media-board.css" />
   <link rel="stylesheet" href="./edit-card.css" />
   <link rel="stylesheet" href="./task-card.css" />
+  <link rel="stylesheet" href="/shared/task/editTaskMedia.css" />
 
   <script src="../login/script.js"></script>
   <script src="../smallest_backend_ever/mini_backend.js"></script>
@@ -37,8 +37,67 @@
 </head>
 
 <body onload="renderTasks()" id="body">
-  <div w3-include-html="../headerNav/headerNav.html"></div>
+  <div w3-include-html="../headerNav/header.html" class="header"></div>
+  <div w3-include-html="../headerNav/navigation.html" class="navigation"></div>
+  <div class="board">
+    <div class="joinDescription">
+      <span>Kanban Project Management Tool</span>
+    </div>
+    <div class="headline">
+      <div class="add-task-mobile">
+        <h1>Board</h1>
+        <button><img src="../assets/img/cross.png" onclick="openAddTaskContainer('to do')"></button>
+      </div>
+      <div class="align-center">
+        <div class="board-search">
+          <input class="inputHover" onkeyup="filterTasks()" placeholder="Find Task" id="searchTask" />
+          <img class="imgHover" src="/assets/img/boardSearchicon.png" />
+        </div>
+        <button class="add-task primary-Button" onclick="openAddTaskContainer('to do')">
+          Add Task <img src="../assets/img/plus-white.svg" />
+        </button>
+      </div>
+    </div>
 
+    <div class="status-container" id="status-container">
+      <div class="status">
+        <div class="status-headline" onclick="openAddTaskContainer('to do')">
+          <span>To do</span>
+          <img class="secondary-Button" src="../assets/img/plus.svg" />
+        </div>
+        <div class="status-child" id="to do" ondrop="moveTo('to do')" ondragleave="endHighlight('to do')"
+          ondragover="allowDrop(event); highlight('to do')"></div>
+      </div>
+
+      <div class="status">
+        <div class="status-headline" onclick="openAddTaskContainer('in progress')">
+          <span>In progress</span>
+          <img class="secondary-Button" src="../assets/img/plus.svg" />
+        </div>
+        <div class="status-child" id="in progress" ondrop="moveTo('in progress')"
+          ondragleave="endHighlight('in progress')" ondragover="allowDrop(event); highlight('in progress')"></div>
+      </div>
+
+      <div class="status">
+        <div class="status-headline" onclick="openAddTaskContainer('awaiting feedback')">
+          <span>Awaiting Feedback</span>
+          <img class="secondary-Button" src="../assets/img/plus.svg" />
+        </div>
+        <div class="status-child" id="awaiting feedback" ondrop="moveTo('awaiting feedback')"
+          ondragleave="endHighlight('awaiting feedback')" ondragover="allowDrop(event); highlight('awaiting feedback')">
+        </div>
+      </div>
+
+      <div class="status">
+        <div class="status-headline" onclick="openAddTaskContainer('done')">
+          <span>Done</span>
+          <img class="secondary-Button" src="../assets/img/plus.svg" />
+        </div>
+        <div id="done" class="status-child" ondrop="moveTo('done')" ondragover="allowDrop(event); highlight('done')"
+          ondragleave="endHighlight('done')"></div>
+      </div>
+    </div>
+  </div>
   <div class="dp-none template-container" id="addTaskContainerContacts">
     <div onclick="closeAddTaskContainer()" id="closeAddTaskContainer" class="bg">
       <div class="task-board" id="taskBoard" onclick="event.stopPropagation();">
@@ -52,65 +111,7 @@
         <div class="template-window" w3-include-html="/shared/task/viewTask.html"></div>
       </div>
     </div>
-  </div>
-  <div class="board">
-    <div class="joinDescription">
-      <span>Kanban Project Management Tool</span>
-    </div>
-    <div class="headline">
-      <div class="add-task-mobile">
-        <span>Board</span>
-        <button><img src="../assets/img/cross.png" onclick="openAddTaskContainer()"></button>
-      </div>
-      <div class="align-center">
-        <div class="board-search">
-          <input onkeyup="filterTasks()" placeholder="Find Task" id="searchTask" />
-          <img src="../assets/img/boardSearchicon.png" />
-        </div>
-        <button class="add-task" onclick="openAddTaskContainer('to do')">
-          Add Task <img src="../assets/img/plus-white.svg" />
-        </button>
-      </div>
-    </div>
 
-    <div class="status-container" id="status-container">
-      <div class="status">
-        <div class="status-headline" onclick="openAddTaskContainer('to do')">
-          <span>To do</span>
-          <img src="../assets/img/plus.svg" />
-        </div>
-        <div class="status-child" id="to do" ondrop="moveTo('to do')" ondragleave="endHighlight('to do')"
-          ondragover="allowDrop(event); highlight('to do')"></div>
-      </div>
-
-      <div class="status">
-        <div class="status-headline" onclick="openAddTaskContainer('in progress')">
-          <span>In progress</span>
-          <img src="../assets/img/plus.svg" />
-        </div>
-        <div class="status-child" id="in progress" ondrop="moveTo('in progress')"
-          ondragleave="endHighlight('in progress')" ondragover="allowDrop(event); highlight('in progress')"></div>
-      </div>
-
-      <div class="status">
-        <div class="status-headline" onclick="openAddTaskContainer('awaiting feedback')">
-          <span>Awaiting Feedback</span>
-          <img src="../assets/img/plus.svg" />
-        </div>
-        <div class="status-child" id="awaiting feedback" ondrop="moveTo('awaiting feedback')"
-          ondragleave="endHighlight('awaiting feedback')" ondragover="allowDrop(event); highlight('awaiting feedback')">
-        </div>
-      </div>
-
-      <div class="status">
-        <div class="status-headline" onclick="openAddTaskContainer('done')">
-          <span>Done</span>
-          <img src="../assets/img/plus.svg" />
-        </div>
-        <div id="done" class="status-child" ondrop="moveTo('done')" ondragover="allowDrop(event); highlight('done')"
-          ondragleave="endHighlight('done')"></div>
-      </div>
-    </div>
-  </div>
+</div>
 </body>
 </html>

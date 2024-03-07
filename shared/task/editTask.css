@@ -4,17 +4,13 @@ body {
 	overflow-x: hidden;
 }
 
+main {
+	width: 100%;
+}
+
 ::placeholder {
 	font-size: 18px;
 	color: lightgrey;
-}
-
-h1 {
-	font-size: 48px;
-	margin-bottom: 6px;
-    margin-top: 7px;
-    color: #CDCDCD;
-    align-self: center;
 }
 
 input {
@@ -31,46 +27,37 @@ input {
     max-width: 1000px;
     width: calc(100vw - 50px);
 	max-height: 98vh;
-	overflow-y: auto;
+	overflow: hidden;
 }
 
-.popup-headline {
-	display: flex;
-    flex-direction: column;
-	background-color: rgba(42, 54, 71, 1);
-    color: white;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-	border-top-right-radius: 32px;
-    border-top-left-radius: 32px;
+#closeButton {
+	transition: transform .2s; 
+}
+
+#closeButton:hover {
+	cursor: pointer;
+	filter: invert(71%) sepia(85%) saturate(3628%) hue-rotate(164deg) brightness(97%) contrast(82%);
+	transform: scale(1.1);
 }
 
 .contentContainer {
+	max-height: 100%;
+    overflow-y: auto;
 	width: 100%;
     justify-content: center;
 }
 
-.adding-info {
+.adding-tasks, .adding-info  {
 	display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
-	width: 45%;
-}
-
-.adding-tasks {
-	display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-
 	width: 45%;
 }
 
 .adding-todos {
 	display: flex;
 	justify-content: space-evenly;
-	margin-top: 12px;
 	margin-bottom: 12px;
-
 }
 
 .section {
@@ -224,79 +211,6 @@ textarea::-webkit-scrollbar-thumb:hover {
 	opacity: 0;
 }
 
-.d-none {
-	display: none !important;
-}
-
-.added-to-board {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 20px;
-	color: white;
-	font-size: 19px;
-	background: rgba(42, 54, 71, 1);
-	height: 60px;
-	width: 300px;
-	margin-top: 10px;
-	margin-left: -200px;
-	border-radius: 20px;
-	z-index: 100;
-}
-
-.added-to-board img {
-	height: 25px;
-	width: 25px;
-}
-
-.clear {
-	display: flex;
-	gap: 10px;
-	justify-content: center;
-	align-items: center;
-	background-color: white;
-	height: 45px;
-	width: 120px;
-	border-radius: 10px;
-	border: 1px solid rgba(42, 54, 71, 1);
-	font-size: 16px;
-}
-
-.clear:hover {
-	border: 1px solid #29ABE2;
-	color: #29ABE2;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-}
-
-.clear:hover img {
-	content: url("/assets/img/cancelHover.png");
-}
-
-.create {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	color: white;
-	width: 120px;
-	height: 45px;
-	background: #2A3647;
-	border-radius: 10px;
-	font-size: 14px;
-	border: unset;
-}
-
-.create:hover {
-	background-color: #29ABE2;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-}
-
-.create img {
-	width: 16px;
-}
 
 .rotate90deg {
 	rotate: 180deg;
@@ -392,17 +306,6 @@ textarea::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 ::placeholder {
 	opacity: 0.5;
 	font-size: 13px;
@@ -426,31 +329,18 @@ textarea::-webkit-scrollbar-thumb:hover {
 	z-index: 50;
   }
   
-  .addTaskContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-  }
-  
   .task-board {
 	position: relative;
 	display: flex;
-	top: 0;
+	overflow: hidden;
 	margin-left: auto;
 	margin-right: auto;
 	z-index: 51;
 	flex-direction: row;
 	border-radius: 32px;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 	background-color: white;
 	animation: moveContainerInMedia 0.8s forwards;
-	max-width: 1000px;
-    width: calc(100vw - 50px);
-	max-height: 98vh;
   }
   
   .moveContainerOutMedia {
@@ -526,12 +416,6 @@ textarea::-webkit-scrollbar-thumb:hover {
 	color: lightgrey;
 	padding: 0px 5px 0px 10px;
 	width: 305px !important;
-  }
-  
-  main {
-	display: flex;
-	width: -webkit-fill-available;
-    height: -webkit-fill-available;
   }
   
   .task-board-left {
@@ -652,6 +536,8 @@ textarea::-webkit-scrollbar-thumb:hover {
   .categoryInputField {
 	border: none;
 	cursor: pointer;
+	border: unset !important;
+	outline: none !important;
 	padding-left: 10px;
 	border-radius: 12px;
 	font-size: 18px;
@@ -697,6 +583,8 @@ textarea::-webkit-scrollbar-thumb:hover {
   
   .prio:hover {
 	box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.4);
+	border: 1px dashed rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
   }
   
   .prio img {
@@ -812,12 +700,9 @@ textarea::-webkit-scrollbar-thumb:hover {
   
   .buttons {
 	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	position: absolute;
-    right: 50px;
-    bottom: 30px;
-	gap: 20px
+	align-self: flex-end;
+    align-items: center;
+    gap: 10px;
   }
   
   #emptySubtask {
@@ -833,58 +718,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 	color: black;
 	border: red 2px solid;
   }
-  
-  .clear {
-	display: flex;
-	gap: 10px;
-	justify-content: center;
-	align-items: center;
-	font-family: "Inter";
-	background-color: white;
-	height: 45px;
-	width: 120px;
-	border-radius: 10px;
-	border: 1px solid rgba(42, 54, 71, 1);
-	font-size: 16px;
-  }
-  
-  .clear:hover {
-	border: 1px solid #2993c2;
-	color: #2993c2;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-  }
-  
-  .clear:hover img {
-	content: url("/assets/img/cancelHover.png");
-  }
-  
-  .create {
-	font-family: "Inter";
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	color: white;
-	width: 120px;
-	height: 45px;
-	background: #2a3647;
-	border-radius: 10px;
-	font-size: 14px;
-	border: unset;
-  }
-  
-  .create:hover {
-	background-color: #2993c2;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-  }
-  
-  .create img {
-	width: 16px;
-  }
-  
+
   .d-flex {
 	display: flex;
 	align-items: center;

@@ -54,9 +54,10 @@ function setButtons() {
     document.getElementById("taskDetailsTrashButton").setAttribute("onclick",`taskDetailsDeleteTask("${currentTask.id}")`);
 }
 
-function taskDetailsEditTask() {
-    openAddTaskContainer(currentTask.status);
-    setEditTaskData();
+function taskDetailsEditTask(taskId) {
+    let task = tasks.find(t => t.id == taskId )
+    setEditTaskData(task);
+    openEditTaskContainer();   
 }
 
 function taskDetailsDeleteTask() {

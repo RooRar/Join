@@ -9,41 +9,68 @@ let currentId;
 let currentStatusTemp;
 let user = JSON.parse(localStorage.getItem("user")) || [];
 
-window.onload (loadAll());
-
 async function loadAll() {
   await init();
   getTasksId();
   renderAssignToList();
 }
 
-function setEditTaskData() {
-  if (currentTask) {
-    document.getElementById("editTaskHeadlineText").innerHTML = "<h1>Edit Task</h1>";
-    document.getElementById("input-title").value = currentTask.title;
-    document.getElementById("input-description").value = currentTask.description;
-    document.getElementById("input-date").value = currentTask.date;
+function setNewTask() {
+  getTasksId();
+}
+
+function setEditTaskData(task) {
+  if (task) {
+    document.getElementById("editTaskHeadlineText").innerHTML = `<img src="/assets/img/logo.png"><h1>Add Task</h1><img src="/assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
+    document.getElementById("taskSaveButton").innerHTML = `Save Task<img src="/assets/img/check.svg" />`
+    document.getElementById("input-title").value = task.title;
+    document.getElementById("input-description").value = task.description;
+    document.getElementById("input-date").value = task.date;
     
-    assignTo = currentTask.contact;
-    currentStatus = currentTask.status;
+    currentId = task.id;
+    assignTo = task.contact;
+    currentStatus = task.status;
     renderImgEdit();
-    category = currentTask.category;
-    color = currentTask.color;
+    category = task.category;
+    color = task.color;
     closeCategoryList();
-    console.log(currentTask.prio);
-    getPrio("medium");
-    currentTask.subTask.forEach(task => {
+    currentPrio = task.prio;
+    getPrio(task.prio);
+    task.subTask.forEach(task => {
       subTask.push(task);
       document.getElementById("newSubtask").innerHTML += createNewSubtaskHtml(task);
     });
+    if (!document.getElementById("taskClearButton").classList.contains('d-none'))
+      document.getElementById("taskClearButton").classList.add('d-none');    
   }
   else {
-    document.getElementById("editTaskHeadlineText").innerHTML = "<h1>Add Task</h1>";
+    getTasksId();
+    document.getElementById("editTaskHeadlineText").innerHTML =  `<img src="/assets/img/logo.png"><h1>Add Task</h1><img src="/assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
+    document.getElementById("taskSaveButton").innerHTML = `Create Task<img src="/assets/img/check.svg" />`
+    if (document.getElementById("taskClearButton").classList.contains('d-none'))
+      document.getElementById("taskClearButton").classList.remove('d-none');
+    clearEditTaskData();
   }
 }
 
 function clearEditTaskData() {
-
+  assignTo = [];
+  currentStatus = 'to do';
+  category = "";
+  clearSubtask();
+  renderImgEdit();
+  document.getElementById("input-title").value = "";
+  document.getElementById("input-description").value = "";
+  document.getElementById("input-date").value = "";
+  document.getElementById("categoryListContainer").innerHTML = clearCategoryHtml();
+  if (document.getElementById("taskSubtask"))
+    document.getElementById("taskSubtask").innerHTML = '';
+  currentPrio = "";
+  document.getElementById('low').classList.remove('low');
+  document.getElementById('medium').classList.remove('medium');
+  document.getElementById('urgent').classList.remove('urgent');
+  document.getElementById('newSubtask').innerHTML = '';
+  
 }
 
 /** creates a random task id */
@@ -89,11 +116,9 @@ function disableDateInputTemplate() {
  * @param {string} prio = task priority
  */
 function addingPrio(prio) {
-  console.log("addingPrio")
   if (prios.includes(prio)) {
     checkPrio(prio);
   } else {
-    console.log("pushPrio " + prio)
     prios.push(prio);
     checkPrio(prio);
   }
@@ -104,7 +129,6 @@ function addingPrio(prio) {
  * @param {string} newprio = task priority
  */
 function checkPrio(newprio) {
-  console.log("checkPrio");
   for (let i = 0; i < prios.length; i++) {
     let prio = prios[i];
     if (prio != newprio || currentPrio == newprio) {
@@ -121,7 +145,6 @@ function checkPrio(newprio) {
  * @param {string} prio = task priority
  */
 function getPrio(prio) {
-  console.log("getPrio " + prio)
   document.getElementById(prio).classList.add(prio);
   document.getElementById(`${prio}-img`).src = `/assets/img/${prio}-white.svg`;
   prios = [prio];
@@ -201,6 +224,11 @@ function getValuesFromInputs() {
  * @param {input} date = inputfield of the date
  */
 function createTask(title, description, date) {
+  
+  const taskIndex = tasks.findIndex(tsk => tsk.id == currentId)
+  if ( taskIndex > -1)
+    tasks.splice(taskIndex,1);
+
   tasks.push({
     title: title.value,
     description: description.value,
@@ -226,9 +254,6 @@ function createTask(title, description, date) {
 function addTaskAndLinkToBoard(title, description, date) {
   addTasks();
   linkToBoard();
-  title.value = "";
-  description.value = "";
-  date.value = "";
 }
 
 /** link to board page */
@@ -236,8 +261,12 @@ function linkToBoard() {
   document.getElementById("addedToBoard").classList.remove("d-none");
   setTimeout(function () {
     window.location.href = "../board/board.html";
-  }, 3000);
-  document.getElementById("addedToBoard").classList.add("d-none");
+    document.getElementById("addedToBoard").classList.add("d-none");
+    title.value = "";
+    description.value = "";
+    date.value = "";
+    currentTask = undefined;
+  }, 1500);
 }
 
 /** add a new subtask */
@@ -373,11 +402,10 @@ function getColorForCategory(newcolor) {
 /** empty category container */
 function clearCategory() {
   document.getElementById("newCategoryInput").classList.add("d-none");
-  document.getElementById("categoryListContainer").innerHTML =
-    clearCategoryHtml();
-}
+  document.getElementById("categoryListContainer").innerHTML = clearCategoryHtml();
+} 
 
-/** clears add task page */
+/** clears add task page */  
 function clearAll() {
   window.location.href = "add_task.html";
 }
@@ -559,8 +587,8 @@ function createNewSubtaskHtml(newSubtask) {
   function addNewSubtaskHtml() {
     return /*html*/ `
       <input type="text" type="text" maxlength="20" class="task-board-input-fields" placeholder="Add new Subtasks" id="new-subTask"/>
-      <img class="cancelSubtask" src="../assets/img/clear.svg" onclick="clearSubtask()">
-      <img class="checkSubtask" src="../assets/img/check-black.svg" onclick="createNewSubtask()" onsubmit="createNewSubtask()">
+      <img class="cancelSubtask textHover" src="../assets/img/clear.svg" onclick="clearSubtask()">
+      <img class="checkSubtask textHover" src="../assets/img/check-black.svg" onclick="createNewSubtask()" onsubmit="create()">
     `;
   }
   
@@ -568,8 +596,8 @@ function createNewSubtaskHtml(newSubtask) {
     return /*html*/ `
     <div class="d-flex" id="newCategoryInput">
       <input class="task-board-input-fields" placeholder="Add new Category" type="text" maxlength="20" id="newCategory"/>
-      <img class="cancelSubtask" src="../assets/img/clear.svg" onclick="clearCategory()">
-      <img class="checkSubtask" src="../assets/img/check-black.svg" onclick="createNewCategory()">
+      <img class="cancelSubtask textHover" src="../assets/img/clear.svg" onclick="clearCategory()">
+      <img class="checkSubtask textHover" src="../assets/img/check-black.svg" onclick="createNewCategory()">
     </div>
     <div class="chooseColor">
       <span class="blue color-container" id="blue" onclick="getColorForCategory('blue')"></span>
@@ -591,7 +619,7 @@ function createNewSubtaskHtml(newSubtask) {
       </div>
     </div>
     <div id="categoryList" class="d-none categoryList">
-      <div class="category-option">
+      <div class="category-option inputHover">
         <p class="newCategory" onclick="newCategory()">New Category</p>
       </div>
     </div>`;
@@ -599,7 +627,7 @@ function createNewSubtaskHtml(newSubtask) {
 
   function addCategoryOption(cat) {
     return /*html*/ `   
-    <div class="category-option" onclick="getCategory('${cat["id"]}')">
+    <div class="category-option inputHover" onclick="getCategory('${cat["id"]}')">
       <p>${cat["name"]}</p>
       <span class="${cat["color"]} color-container"></span>
     </div>`;
@@ -607,7 +635,7 @@ function createNewSubtaskHtml(newSubtask) {
   
   function closeCategoryListHtml() {
     return /*html*/ `
-    <div class="category" onclick="openCategoryList()" id="categoryInput">
+    <div class="category inputHover" onclick="openCategoryList()" id="categoryInput">
       <div class="categoryInputContainer">
         <input class="categoryInputField" type="text" placeholder="Enter a Category" id="category"/>
       </div>
@@ -627,7 +655,7 @@ function createNewSubtaskHtml(newSubtask) {
   
   function clearCategoryHtml() {
     return /*html*/ `
-    <div class="category" onclick="openCategoryList()" id="categoryInput">
+    <div class="category inputHover" onclick="openCategoryList()" id="categoryInput">
     <div class="categoryInputContainer">
       <input class="categoryInputField" type="text" placeholder="Enter a Category" id="categoryInputField"/>
     </div>
@@ -639,7 +667,7 @@ function createNewSubtaskHtml(newSubtask) {
   
   function openAssignToListHtml() {
     return /*html*/ `
-    <div class="category" onclick="toggleAssignList()" id="closedAssingToInput">
+    <div class="category inputHover" onclick="toggleAssignList()" id="closedAssingToInput">
     <input class="categoryInputField" type="text" placeholder="Assign to"/>
     <div class="dropdownContainer">
     <img id="assignToListDropDownIcon" src="/assets/img/dropdown.svg">
@@ -665,7 +693,7 @@ function createNewSubtaskHtml(newSubtask) {
   
   function renderContactsHtml(contact,checkboxState) {
     return /*html*/ `
-    <div onclick="assignContactTo('${contact["id"]}')" id="${contact["id"]}-add" class="assign-to-box" >
+    <div onclick="assignContactTo('${contact["id"]}')" id="${contact["id"]}-add" class="assign-to-box inputHover" >
       ${contact["firstName"]} ${contact["surname"]}
       <input type="checkbox" id="${contact["id"]}-input" ${checkboxState} >
     </div>`;
@@ -674,7 +702,7 @@ function createNewSubtaskHtml(newSubtask) {
   function assignToYouTemplate() {
     return /*html*/ `
     <div onclick="assignContactToYou('${user["firstName"]}','${user["surname"]}')" 
-    id="${user["mail"]}-addYou" class="assign-to-box" >
+    id="${user["mail"]}-addYou" class="assign-to-box inputHover" >
       You
       <input type="checkbox" id="${user["mail"]}-inputYou" >
     </div>`;

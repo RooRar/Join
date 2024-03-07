@@ -18,8 +18,8 @@ function renderContactsTemplate(j) {
 function showContactDetailsTemplate(j) {
     return `
     <div class="contactsHeadlineContainer">
-    <span class="kanbanResponsive">Kanban Project Managment Tool</span>
-        <span class="contactsHeadline">Contacts</span>
+        <span class="kanbanResponsive">Kanban Project Managment Tool</span>
+        <h1 class="contactsHeadline">Contacts</h1>
         <div class="contactsTextBreakLine"></div>
         <span class="contactsBetterWithATeam">Better with a team</span>
         <div onclick="closeContactDetails()"class="arrowLeft"><img src="../assets/img/arrow_left.png"></div>
@@ -29,7 +29,7 @@ function showContactDetailsTemplate(j) {
             <div><div id="adressDetailsImg" class="adressDetailsImg"></div></div>
             <div class="adressNamePlusAddTask">
                 <span class="nameDetailAdress">${contacts[j]["firstName"]} ${contacts[j]["surname"]}</span>
-                <div onclick="openAddTaskContainer()" class="adressAddTaskContainer">
+                <div onclick="openAddTaskContainer('to do')" class="adressAddTaskContainer textHover">
                     <div><img src="../assets/img/addPlus.png"></div>
                     <span>Add Task</span>
                 </div>
@@ -37,15 +37,15 @@ function showContactDetailsTemplate(j) {
         </div>
         <div class="contactInformationContainer">
             <span class="contactInfoHeadline">Contact Information</span>
-            <div onclick="openEditContactContainer(${j})" class="editContactContainer">
-                <div><img src="../assets/img/pencilContacts.png"></div>
+            <div onclick="openEditContactContainer(${j})" class="editContactContainer imgHover">
+                <img src="../assets/img/pencilContacts.png">
                 <span>Edit Contact</span>
             </div>
         </div>
         <div class="emailPlusPhoneContainer">
             <div class="emailContainer">
                 <span class="emailHeadline">Email</span>
-                <span class="emailAdress"><a href="mailto:${contacts[j]["mail"]}">${contacts[j]["mail"]}</a></span>
+                <span class="emailAdress textHover"><a href="mailto:${contacts[j]["mail"]}">${contacts[j]["mail"]}</a></span>
             </div>
             <div class="phoneContainer">
                 <span class="phoneHeadline">Phone</span>
@@ -54,17 +54,16 @@ function showContactDetailsTemplate(j) {
         </div>
     </div>
     
-    <div  id="editContactContainer" class="editContactForm editContactAround dp-none">
+    <div id="editContactContainer" class="editContactForm editContactAround dp-none">
         <div class="addContactLeftContainer">
             <div class="logoAddContact"><img src="../assets/img/logo.png"></div>
             <span class="addContactHeadline">Edit contact</span>
             <div class="addContactLine"></div>
         </div>
         <div>
-            <div class="addContactProfileImg">
-                <div id="addContactProfileImg"></div>
+            <div class="addContactProfileImg"><div id="addContactProfileImg"></div>
             </div>
-            <div onclick="closeEditContactContainer()" class="closeAddContact"><img src="../assets/img/close.png"></div>
+            <div onclick="closeAddContactContainer()" class="closeAddContact"><img src="../assets/img/close.png"></div>
             <form onsubmit="saveEdit(${j}); return false">
                 <div class="addContactInputContainer">
                     <input id="editContactFirstNameInput" placeholder="First name" type="text" required maxlength="10" onkeydown="return /[a-z]/i.test(event.key)"
@@ -92,7 +91,7 @@ function showContactDetailsTemplate(j) {
 
 function headlineTemplate() {
     return `<div class="contactsHeadlineContainer">
-                <span class="contactsHeadline">Contacts</span>
+                <h1 class="contactsHeadline">Contacts</h1>
                 <div class="contactsTextBreakLine"></div>
                 <span class="contactsBetterWithATeam">Better with a team</span>
             </div>`

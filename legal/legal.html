@@ -14,15 +14,16 @@
   <title>Legal Notice</title>
   <script src="../script.js"></script>
 
+  <link rel="stylesheet" href="/shared/styles/base.css" />
   <link rel="stylesheet" href="../headerNav/headerNav.css" />
   <link rel="stylesheet" href="../fonts/fonts.css" />
   <link rel="stylesheet" href="../help/style.css" />
 </head>
 
 <body onload="includeHTML()">
-  <div w3-include-html="../headerNav/headerNav.html"></div>
-  <div class="aroundLegalContainer">
-    <div class="legal-side">
+  <div w3-include-html="../headerNav/header.html" class="header"></div>
+  <div w3-include-html="../headerNav/navigation.html" class="navigation"></div>
+    <div class="mainContent">
       <div class="help-hl">
         <div>
           <h1>Impressum</h1>
@@ -61,8 +62,6 @@
           </p><br>
           Website Impressum von <a href="https://www.impressum-generator.de">impressum-generator.de</a>
         </div>
-
-      </div>
     </div>
   </div>
 </body>

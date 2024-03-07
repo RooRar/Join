@@ -7,17 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/shared/styles/base.css"/>
+    <link rel="stylesheet" href="../login/index.css">
     <link rel="stylesheet" href="./contacts.css">
     <link rel="stylesheet" href="./addContact.css">
     <link rel="stylesheet" href="./contactsMedia.css">
     <link rel="stylesheet" href="../headerNav/headerNav.css">
-    <link rel="stylesheet" href="../login/index.css">
     <link rel="stylesheet" href="/shared/task/editTaskMedia.css" />
     <link rel="stylesheet" href="/shared/task/editTask.css" />
     <link rel="stylesheet" href="/shared/styles/prios.css">
     <link rel="stylesheet" href="/shared/styles/color.css">
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
     <link rel="stylesheet" href="./addContactsMedia.css">
+
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
@@ -33,66 +34,24 @@
 
 <body onload="renderContacts()">
 
-    <div w3-include-html="../headerNav/headerNav.html"></div>
+    <div w3-include-html="../headerNav/header.html" class="header"></div>
+    <div w3-include-html="../headerNav/navigation.html" class="navigation"></div>
 
     <div class="contactsContainer">
-        <div id="contactsAdressContainer" class="contactsAdressContainer">
-
-        </div>
-        <div id="contactDetails" class="contactsRightContainer">
-
-        </div>
+        <div id="contactsAdressContainer" class="contactsAdressContainer"></div>
+        <div id="contactDetails" class="contactsRightContainer"></div>
     </div>
-    <div id="addContactContainer" class="addContactContainer dp-none">
-        <div class="addContactLeftContainer">
-            <div class="logoAddContact"><img src="../assets/img/logo.png"></div>
-            <span class="addContactHeadline">Add contact</span>
-            <span class="tasksAreBetter">Tasks are better with a team!</span>
-            <div class="addContactLine"></div>
-        </div>
-        <div class="addContactProfileImg"><img src="../assets/img/emptyImg.png"></div>
 
-        <div onclick="closeNewContactContainer()" class="closeAddContact"><img src="../assets/img/close.png"></div>
-
-        <form onsubmit="addContact(); return false">
-            <div class="addContactInputContainer">
-                <input id="addContactFirstNameInput" placeholder="First name" required maxlength="10" type="text"
-                    onkeydown="return /[a-z]/i.test(event.key)"
-                    style="background-image: url(../assets/img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-                <input id="addContactSurnameInput" placeholder="Surname" required maxlength="12" type="text"
-                    onkeydown="return /[a-z]/i.test(event.key)"
-                    style="background-image: url(../assets/img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-                <input id="addContactMailInput" placeholder="Email" required maxlength="40" type="email"
-                    style="background-image: url(../assets/img/emailInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-                <input id="addContactPhoneInput" placeholder="Phone" required
-                    onKeyPress="if(this.value.length==20) return false;" onkeydown="return event.keyCode !== 69"
-                    type="number"
-                    style="background-image: url(../assets/img/phoneInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
-                <span class="error dp-none" id="emailIsAlreadyExistingAddContact">Email is already existing</span>
-            </div>
-            <div class="buttonsAddContactContainer">
-                <div onclick="closeNewContactContainer()" class="cancelButton">
-                    <span>Cancel</span>
-                    <div><img src="../assets/img/cancel.png"></div>
-                </div>
-                <button class="createContactButton">
-                    <span>Create contact</span>
-                    <div><img src="../assets/img/create.png"></div>
-                </button>
-            </div>
-        </form>
-
-    </div>
     <div id="contactCreated" class="contactCreated dp-none">
         <span>Contact succesfully created</span>
     </div>
     <div id="contactDeleted" class="contactCreated dp-none">
         <span>Contact succesfully deleted</span>
     </div>
-    <div onclick="closeNewContactContainer(); closeEditContactContainer()" id="bg-contacts" class="bg-contacts dp-none">
+    <div onclick="closeNewContactContainer();" id="bg-contacts" class="bg-contacts dp-none">
     </div>
 
-    <div onclick="openNewContactContainer()" id="contactsNewContact" class="contactsNewContact">
+    <div onclick="openNewContactContainer()" id="contactsNewContact" class="contactsNewContact primary-Button">
         <span>New contact</span>
         <img src="../assets/img/addSymbol.png" alt="add symbol">
     </div>
@@ -105,6 +64,49 @@
                     <div class="template-window" w3-include-html="/shared/task/editTask.html"></div>
         </div>
     </div>
+        </div>
+    </div>
+    <div id="addContactContainer" class="addContactContainer dp-none">
+        <div class="addContactLeftContainer">
+            <div class="logoAddContact"><img src="../assets/img/logo.png"></div>
+            <span class="addContactHeadline">Add contact</span>
+            <span class="tasksAreBetter">Tasks are better with a team!</span>
+            <div class="addContactLine"></div>
+        </div>
+        <div class="addContactMiddleContainer">
+            <div class="addContactProfileImg"><img src="../assets/img/emptyImg.png"></div>
+        </div>
+        <div onclick="closeNewContactContainer()" class="closeAddContact"><img src="../assets/img/close.png"></div>
+        <div class="addContactRightContainer">
+
+        <form onsubmit="addContact(); return false">
+            <div class="addContactInputContainer">
+                <input class="inputHover" id="addContactFirstNameInput" placeholder="First name" required maxlength="10" type="text"
+                    onkeydown="return /[a-z]/i.test(event.key)"
+                    style="background-image: url(../assets/img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
+                <input class="inputHover" id="addContactSurnameInput" placeholder="Surname" required maxlength="12" type="text"
+                    onkeydown="return /[a-z]/i.test(event.key)"
+                    style="background-image: url(../assets/img/nameInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
+                <input class="inputHover" id="addContactMailInput" placeholder="Email" required maxlength="40" type="email"
+                    style="background-image: url(../assets/img/emailInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
+                <input class="inputHover" id="addContactPhoneInput" placeholder="Phone" required
+                    onKeyPress="if(this.value.length==20) return false;" onkeydown="return event.keyCode !== 69"
+                    type="number"
+                    style="background-image: url(../assets/img/phoneInput.png); background-repeat: no-repeat; background-position: calc(100% - 19px);">
+                <span class="error dp-none" id="emailIsAlreadyExistingAddContact">Email is already existing</span>
+            </div>
+        </form>
+
+        </div>
+        <div class="buttonsAddContactContainer">
+            <div onclick="closeNewContactContainer()" class="cancelButton secondary-Button">
+                <span>Cancel</span>
+                <div><img src="../assets/img/cancel.png"></div>
+            </div>
+            <button class="createContactButton primary-Button">
+                <span>Create contact</span>
+                <div><img src="../assets/img/create.png"></div>
+            </button>
         </div>
     </div>
 

@@ -156,7 +156,7 @@ function editCardHtmlTemplate(id) {
 
 function renderContactsEditHtml(contact,checkboxState) {
   return ` 
-    <div onclick="UserAssignSelectionChanged('${contact["id"]}')" id="${contact["id"]}-edit" class="assign-to-box" >
+    <div onclick="UserAssignSelectionChanged('${contact["id"]}')" id="${contact["id"]}-edit" class="assign-to-box inputHover" >
       ${contact["firstName"]} ${contact["surname"]}
       <input id="${contact["id"]}-input" type="checkbox" ${checkboxState}>
     </div>`;

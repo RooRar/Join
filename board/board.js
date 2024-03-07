@@ -99,7 +99,7 @@ function openCard(id) {
 /** close task card */
 function closeCard() {
   document.getElementById("taskCardContainer").classList.add("dnone");
-  currentTask = '';
+  currentTask = undefined;
 }
 
 /**

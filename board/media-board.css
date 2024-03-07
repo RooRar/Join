@@ -1,15 +1,13 @@
-@media (max-width: 1435px) {
+@media (max-width: 1220px) {
 
   .headline {
-    margin-bottom: 10px;
     gap: unset;
   }
 
   .status {
     display: flex;
     flex-direction: column;
-    height: 300px;
-    margin-bottom: 28.5px;
+    max-height: 260px;
   }
 
   .status-headline {
@@ -24,14 +22,10 @@
 @media (max-width: 900px) {
   .board {
     align-items: center;
-    left: unset;
     display: flex;
     flex-direction: column;
-    padding-top: 123px;
-    top: unset;
     width: 100%;
-    height: calc(100dvh - 204px);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .board::-webkit-scrollbar {
@@ -71,11 +65,7 @@
 
   .headline {
     flex-direction: column;
-    align-items: unset;
-    width: 363px;
-    gap: 0px;
     font-size: 37px;
-    margin-bottom: 10px;
   }
 
   .board-search input {
@@ -94,32 +84,8 @@
   }
 
   .status {
-    width: 363px;
-    margin-right: 0px;
-  }
-
-  .status-headline {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-}
-
-@media (max-width: 450px) {
-  .joinDescription {
-    width: 310px;
-  }
-
-  .headline {
-    width: 310px;
-  }
-
-  .status {
-    width: 300px;
-  }
-
-  .status-child {
+    min-width: 300px;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 500px;
   }
 }

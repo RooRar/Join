@@ -1,3 +1,5 @@
+const mediaQueryList = window.matchMedia("(max-width: 900px)");
+let contactDetailsIsOpened = false;
 let contacts = [];
 let letters = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
 let guestUser =
@@ -11,6 +13,24 @@ let guestUser =
     password: 'test'
 };
 
+mediaQueryList.addEventListener("change", handleMediaChange);
+
+
+
+function handleMediaChange(evt) {
+    let contactDetails =  document.getElementById('contactDetails');
+    let contactsAdressContainer = document.getElementById('contactsAdressContainer');
+    if (!contactDetails || !contactsAdressContainer)
+        return;
+
+    if (evt.matches) {
+        if(!contactDetails.classList.contains("dp-none") && !contactsAdressContainer.classList.contains("dp-none"))
+        contactDetails.classList.add("dp-none");
+      } else {
+        contactDetails.classList.remove("dp-none");
+        contactsAdressContainer.classList.remove("dp-none");
+      }
+}
 /** loads contacts of database */
 load();
 
@@ -18,6 +38,7 @@ load();
 async function renderContacts() {
     await init();
     loadContacts();
+    handleMediaChange(mediaQueryList);
 }
 
 /** loads the contacts */
@@ -53,11 +74,12 @@ function checkIfLetterExist(contactsAdressContainer) {
  */
 async function showContactDetails(j) {
     loadContacts();
-    let contactDetails = document.getElementById('contactDetails');
-    contactDetails.innerHTML = showContactDetailsTemplate(j);
+    document.getElementById('contactDetails').classList.remove("dp-none");
+    document.getElementById('contactDetails').innerHTML = showContactDetailsTemplate(j);
     document.getElementById(`adressField${j}`).style.background = "#2A3647";
     document.getElementById(`adressField${j}`).style.color = "#FFFFFF";
     changeContactImg(j);
+    handleMediaChange(mediaQueryList);
     showContactDetailsIfResponsive();
 }
 
@@ -67,13 +89,13 @@ async function showContactDetails(j) {
  */
 function openEditContactContainer(j) {
     document.getElementById('emailIsAlreadyExistingEditContact').classList.add('dp-none');
-    document.getElementById('editContactFirstNameInput').value = `${contacts[j]["firstName"]}`;
-    document.getElementById('editContactSurnameInput').value = `${contacts[j]["surname"]}`;
-    document.getElementById('editContactMailInput').value = `${contacts[j]["mail"]}`;
-    document.getElementById('editContactPhoneInput').value = `${contacts[j]["phone"]}`;
+    document.getElementById('addContactFirstNameInput').value = `${contacts[j]["firstName"]}`;
+    document.getElementById('addContactSurnameInput').value = `${contacts[j]["surname"]}`;
+    document.getElementById('addContactMailInput').value = `${contacts[j]["mail"]}`;
+    document.getElementById('addContactPhoneInput').value = `${contacts[j]["phone"]}`;
     changeEditImg(j);
-    document.getElementById('editContactContainer').classList.remove('moveEditContainerOutMedia');
-    document.getElementById('editContactContainer').classList.remove('dp-none');
+    document.getElementById('addContactContainer').classList.remove('moveContainerOutMedia');
+    document.getElementById('addContactContainer').classList.remove('dp-none');
     document.getElementById('bg-contacts').classList.remove('dp-none');
 }
 
@@ -225,25 +247,37 @@ async function checkIfTaskIncludeContact(j) {
 
 /** close new contact container */
 function closeNewContactContainer() {
+    if (!document.getElementById('addContactContainer'))
+    return;
     document.getElementById('addContactContainer').classList.add('moveContainerOutMedia');
     document.getElementById('bg-contacts').classList.add('dp-none');
 }
 
 /** close edit contact container */
 function closeEditContactContainer() {
-    document.getElementById('editContactContainer').classList.add('moveEditContainerOutMedia');
+    if (!document.getElementById('addContactContainer'))
+        return;
+    document.getElementById('addContactContainer').classList.add('moveContainerOutMedia');
     document.getElementById('bg-contacts').classList.add('dp-none');
 }
 
 /** close edit contact container afer save or delete contact */
 function closeEditSaveDeleteContactContainer() {
-    document.getElementById('editContactContainer').classList.add('dp-none');
+    document.getElementById('addContactContainer').classList.add('dp-none');
     document.getElementById('bg-contacts').classList.add('dp-none');
 }
 
 /** open add task container */
 function openAddTaskContainer(status) {
+    setEditTaskData();
     currentStatus = status;
+    currentTask = undefined;
+    document.getElementById('addTaskContainerContacts').classList.remove('dp-none');
+    document.getElementById('taskBoard').classList.remove('moveContainerOutMedia');
+}
+
+function openEditTaskContainer() {
+    currentStatus = 'to do';
     document.getElementById('addTaskContainerContacts').classList.remove('dp-none');
     document.getElementById('taskBoard').classList.remove('moveContainerOutMedia');
 }
@@ -317,7 +351,10 @@ function showContactDetailsIfResponsive() {
     if (window.matchMedia("(max-width: 1000px)").matches) {
         document.getElementById('contactsAdressContainer').classList.add("dp-none");
         document.getElementById('contactsNewContact').classList.add("dp-none");
-        document.getElementById('contactDetails').style.display = "flex";
+        document.getElementById('contactDetails').classList.remove("dp-none");
+    }
+    else {
+        document.getElementById('contactsAdressContainer').classList.remove("dp-none");
     }
 }
 
@@ -327,7 +364,7 @@ function closeContactDetails() {
     if (window.matchMedia("(max-width: 1000px)").matches) {
         document.getElementById('contactsAdressContainer').classList.remove("dp-none");
         document.getElementById('contactsNewContact').classList.remove("dp-none");
-        document.getElementById('contactDetails').style.display = "none";
+        document.getElementById('contactDetails').classList.add("dp-none");
     }
 }
 

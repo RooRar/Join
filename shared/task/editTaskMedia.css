@@ -1,4 +1,14 @@
 @media (max-width: 900px) {
+  .editTaskContent {
+    width: 100vw;
+    max-height: 100vh;
+    border-radius:0px;
+  }
+  
+  .task-board {
+    height: 100%;
+    border-radius:0px;
+  }
 
   .line {
     display: none;
@@ -20,5 +30,10 @@
   .buttons {
     position: relative !important;
     justify-content: center;
+    right: unset;
+  }
+
+  .primary-Button, .secondary-Button {
+    gap: 5px !important;
   }
 }

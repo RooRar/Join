@@ -1,4 +1,9 @@
 @media(max-width: 690px) {
+    .logo {
+        width: 64px;
+        top: 11px;
+        left: 18px;
+    }
 
     .changeBgColor {
         animation: changeBgColor 1s ease-in-out;
@@ -12,12 +17,6 @@
         100% {
             background-color: #F6F7F8;
         }
-    }
-
-    .logo {
-        width: 64px;
-        top: 37px;
-        left: 38px;
     }
 
     .fadeIn {
@@ -56,16 +55,14 @@
         }
 
         100% {
-            top: 37px;
-            left: 38px;
             width: 64px;
+            top: 11px;
+            left: 18px;
         }
     }
 
-    #loginBox {
-        width: 372px;
-        height: 510px;
-        top: 194px;
+    .loginArea {
+        grid-template-columns: 65px auto 65px;
     }
 
     .loginHeadlineText {
@@ -75,10 +72,6 @@
     .loginHeadlineSeperator {
         width: 88px;
         margin-bottom: 6px;
-    }
-
-    .loginInputField {
-        width: 327px;
     }
 
     .loginRememberMeForgotPassword {
@@ -108,51 +101,26 @@
         display: flex;
     }
 
-    #signUpButton {
-        top: unset;
-        bottom: 5dvh;
-        right: unset;
-    }
-
     .inputFieldContainer {
         margin-top: 0;
-    }
-
-    form {
-        margin-top: 20px;
-        margin-left: auto;
-    }
-}
-
-@media (max-height: 880px) {
-    #loginBox {
-        top: 140px;
     }
 }
 
 @media (max-height: 825px) {
-    #signUpButton {
-        bottom: unset;
-        top: 5dvh;
-        right: 10px;
-        gap: 5px;
-    }
 
     .signInText {
         font-size: 15px;
+    }
+
+    #loginBox {
+        padding: 23px 10%;
     }
 }
 
 
 @media (max-width: 400px) {
 
-    #loginBox {
-        width: 290px;
-        padding: 0;
-    }
-
     .loginInputField {
-        width: 250px;
         font-size: 16px;
     }
 }

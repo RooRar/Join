@@ -9,18 +9,24 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
     <link rel="mask-icon" href="./assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
-    <link rel="stylesheet" href="./login/index.css">
+    
+    <link rel="stylesheet" href="/shared/styles/base.css"/>
+    <link rel="stylesheet" href="./login/forgot/forgot.css">
+    <link rel="stylesheet" href="./login/signUp/signUp.css">
     <link rel="stylesheet" href="./headerNav/headerNav.css">
     <link rel="stylesheet" href="./assets/fonts/fonts.css">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./login/index.css">
+    <link rel="stylesheet" href="./login/media.css">
+
     <script src="./smallest_backend_ever/mini_backend.js"></script>
     <script src="./script.js"></script>
     <script src="./login/script.js"></script>
     <script src="./login/index.js"></script>
     <script src="./contacts/contacts.js"></script>
-    <link rel="stylesheet" href="./login/forgot/forgot.css">
-    <link rel="stylesheet" href="./login/signUp/signUp.css">
-    <link rel="stylesheet" href="./login/media.css">
     <script src="./login/signUp/signUp.js"></script>
+
+
     <title>Login</title>
 </head>
 
@@ -33,17 +39,15 @@
                 <div class="loginHeadlineSeperator"></div>
                 <form onsubmit="login(); return false;">
                     <div class="inputFieldContainer">
-                        <input id="loginEmail" class="loginInputField" onkeyup="emailInputChanged()" required=""
+                        <input id="loginEmail" class="loginInputField inputHover" onkeyup="emailInputChanged()" required=""
                             type="email" placeholder="E-mail">
                         <img class="inputFieldImage" src="./assets/img/mail.png" />
                     </div>
                     <span id="wrongEmail" class="error hidden">Wrong Email</span>
                     <div class="inputFieldContainer">
-                        <input id="loginPassword" class="loginInputField" required="" type="password"
+                        <input id="loginPassword" class="loginInputField inputHover" required="" type="password"
                             placeholder="Passwort" onkeyup="pwInputChanged()">
-                        <div class="inputFieldImageContainer">
                             <img id="loginPasswordImage" class="inputFieldImage" src="./assets/img/lock.png" />
-                        </div>
                     </div>
                     <span class="error hidden" id="wrongPassword">Wrong Password</span>
                     <div class="loginRememberMeForgotPassword">
@@ -51,17 +55,17 @@
                             <input id="loginRememberCheckbox" type="checkbox">
                             <span>Remember me</span>
                         </div>
-                        <a class="forgotPassword" onclick="openForgotPassword()">Forgot my password</a>
+                        <a class="forgotPassword textHover" onclick="openForgotPassword()">Forgot my password</a>
                     </div>
                     <div class="loginButtons">
-                        <button class="loginButton" type="submit">Login</button>
-                        <button class="loginGuestButton" type="button" onclick="guestLogin()">Guest login</button>
+                        <button class="loginButton primary-Button" type="submit">Login</button>
+                        <button class="loginGuestButton secondary-Button" type="button" onclick="guestLogin()">Guest login</button>
                     </div>
                 </form>
             </div>
             <div id="signUpButton" class="fadeIn">
                 <span class="signInText">Not a Join user?</span>
-                <button onclick="openSignUp()" class="signInButton">Sign up</button>
+                <button onclick="openSignUp()" class="signInButton primary-Button">Sign up</button>
             </div>
             <div id="signUpContainerContent" class="signUpContainerContent dp-none"
                 w3-include-html="./login/signUp/signUp.html"></div>

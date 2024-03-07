@@ -1,16 +1,13 @@
-h1 {
-    align-self: flex-start;
-    margin-left: 20px;
-    color:black;
+main {
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-
 .editTaskContent {
-    margin-left: 232px;
-    margin-top: 89px;
-    max-width: 1000px;
+    max-width: 1500px;
     width: 100%;
     max-height: 98vh;
+    overflow-y: auto;
 }
 
 .popup-headline {
@@ -21,6 +18,10 @@ h1 {
     box-shadow: unset;
     border-top-right-radius: unset;
     border-top-left-radius: unset;
+    align-self: flex-start;
+    img {
+        display: none;
+    }
 }
 
 .taskPropertyContainer {
@@ -32,15 +33,4 @@ h1 {
         margin-left: unset;
         margin-top: unset;
     }
-    main {
-        background-color: #F5F5F5;
-    width: 100%;
-    height: calc(100dvh - 80px - 79.02px);
-    position: absolute;
-    top: 80px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-}
 }

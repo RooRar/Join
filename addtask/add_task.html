@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/shared/task/editTask.css"/>
     <link rel="stylesheet" href="/shared/styles/color.css"/>
     <link rel="stylesheet" href="/shared/styles/prios.css"/>
-    <link rel="stylesheet" href="../headerNav/headerNav.css"/>
+    <link rel="stylesheet" href="/headerNav/headerNav.css"/>
     <link rel="stylesheet" href="/shared/task/editTask.css"/>
     <link rel="stylesheet" href="./add_task.css"/>
     <link rel="stylesheet" href="/shared/task/editTaskMedia.css"/>
@@ -31,7 +31,8 @@
 
 
   <body onload="loadAll()" onclick="closeAssignList(); closeCategoryList()">
-    <div w3-include-html="../headerNav/headerNav.html" class="header"></div>
-    <div w3-include-html="/shared/task/editTask.html" class="main"></div>
+    <div w3-include-html="../headerNav/header.html" class="header"></div>
+    <div w3-include-html="../headerNav/navigation.html" class="navigation"></div>
+    <div w3-include-html="/shared/task/editTask.html" class="mainContent"></div>
   </body>
 </html>
