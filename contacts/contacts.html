@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/shared/styles/base.css"/>
+    <link rel="stylesheet" href="../shared/styles/base.css"/>
     <link rel="stylesheet" href="../login/index.css">
     <link rel="stylesheet" href="./contacts.css">
     <link rel="stylesheet" href="./addContact.css">
     <link rel="stylesheet" href="./contactsMedia.css">
     <link rel="stylesheet" href="../headerNav/headerNav.css">
-    <link rel="stylesheet" href="/shared/task/editTaskMedia.css" />
-    <link rel="stylesheet" href="/shared/task/editTask.css" />
-    <link rel="stylesheet" href="/shared/styles/prios.css">
-    <link rel="stylesheet" href="/shared/styles/color.css">
+    <link rel="stylesheet" href="../shared/task/editTaskMedia.css" />
+    <link rel="stylesheet" href="../shared/task/editTask.css" />
+    <link rel="stylesheet" href="../shared/styles/prios.css">
+    <link rel="stylesheet" href="../shared/styles/color.css">
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
     <link rel="stylesheet" href="./addContactsMedia.css">
 
@@ -26,7 +26,7 @@
     <script src="../script.js"></script>
     <script src="../login/script.js"></script>
     <script src="../smallest_backend_ever/mini_backend.js"></script>
-    <script src="/shared/task/editTask.js"></script>
+    <script src="../shared/task/editTask.js"></script>
     <script src="./contacts.js"></script>
     <script src="./contactsTemplates.js"></script>
     <title>Contacts</title>
@@ -61,7 +61,7 @@
         <div class="addTaskContainerInput">
             <div onclick="closeAddTaskContainer()" id="closeAddTaskContainer" class="bg">
                 <div class="task-board" id="taskBoard" onclick="event.stopPropagation();">
-                    <div class="template-window" w3-include-html="/shared/task/editTask.html"></div>
+                    <div class="template-window" w3-include-html="../shared/task/editTask.html"></div>
         </div>
     </div>
         </div>
@@ -69,7 +69,7 @@
     <div id="addContactContainer" class="addContactContainer dp-none">
         <div class="addContactLeftContainer">
             <div class="logoAddContact"><img src="../assets/img/logo.png"></div>
-            <span class="addContactHeadline">Add contact</span>
+            <span id="addContactHeadline" class="addContactHeadline">Add contact</span>
             <span class="tasksAreBetter">Tasks are better with a team!</span>
             <div class="addContactLine"></div>
         </div>
@@ -79,7 +79,7 @@
         <div onclick="closeNewContactContainer()" class="closeAddContact"><img src="../assets/img/close.png"></div>
         <div class="addContactRightContainer">
 
-        <form onsubmit="addContact(); return false">
+        <form id="contactEditForm" onsubmit="addContact(); return false">
             <div class="addContactInputContainer">
                 <input class="inputHover" id="addContactFirstNameInput" placeholder="First name" required maxlength="10" type="text"
                     onkeydown="return /[a-z]/i.test(event.key)"
@@ -103,8 +103,8 @@
                 <span>Cancel</span>
                 <div><img src="../assets/img/cancel.png"></div>
             </div>
-            <button class="createContactButton primary-Button">
-                <span>Create contact</span>
+            <button id="createContactButton" class="createContactButton primary-Button">
+                <span id="createContactButtonText">Create contact</span>
                 <div><img src="../assets/img/create.png"></div>
             </button>
         </div>

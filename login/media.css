@@ -123,4 +123,8 @@
     .loginInputField {
         font-size: 16px;
     }
+
+    .loginArea {
+        grid-template-columns: 45px auto 45px;
+    }
 }

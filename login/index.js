@@ -68,7 +68,8 @@ function noUserPassword() {
         mail: user.mail,
         password: "",
         phone: user.phone,
-        surname: user.surname
+        surname: user.surname,
+        id: user.id
     };
 }
 

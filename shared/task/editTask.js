@@ -13,6 +13,7 @@ async function loadAll() {
   await init();
   getTasksId();
   renderAssignToList();
+  setEditTaskData(undefined);
 }
 
 function setNewTask() {
@@ -21,8 +22,8 @@ function setNewTask() {
 
 function setEditTaskData(task) {
   if (task) {
-    document.getElementById("editTaskHeadlineText").innerHTML = `<img src="/assets/img/logo.png"><h1>Add Task</h1><img src="/assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
-    document.getElementById("taskSaveButton").innerHTML = `Save Task<img src="/assets/img/check.svg" />`
+    document.getElementById("editTaskHeadlineText").innerHTML = `<img src="../assets/img/logo.png"><h2>Edit Task</h2><img src="../assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
+    document.getElementById("taskSaveButton").innerHTML = `Save Task<img src="../assets/img/check.svg" />`
     document.getElementById("input-title").value = task.title;
     document.getElementById("input-description").value = task.description;
     document.getElementById("input-date").value = task.date;
@@ -45,8 +46,8 @@ function setEditTaskData(task) {
   }
   else {
     getTasksId();
-    document.getElementById("editTaskHeadlineText").innerHTML =  `<img src="/assets/img/logo.png"><h1>Add Task</h1><img src="/assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
-    document.getElementById("taskSaveButton").innerHTML = `Create Task<img src="/assets/img/check.svg" />`
+    document.getElementById("editTaskHeadlineText").innerHTML =  `<img src="../assets/img/logo.png"><h2>Add Task</h2><img src="../assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
+    document.getElementById("taskSaveButton").innerHTML = `Create Task<img src="../assets/img/check.svg" />`
     if (document.getElementById("taskClearButton").classList.contains('d-none'))
       document.getElementById("taskClearButton").classList.remove('d-none');
     clearEditTaskData();
@@ -310,7 +311,7 @@ function openCategoryList() {
 
 function renderAssignToList() {
   document.getElementById("assignToContainer").innerHTML = openAssignToListHtml();
-  renderAddTaskContacts();
+  renderAllContacts();
 }
 
 /** close "assign to" list */
@@ -371,6 +372,15 @@ function createNewCategory() {
     });
     setCategoriesToBackend(categories);
     closeCategoryList();
+    getCategory(cat[0]);
+  }
+}
+
+function deleteCategory(categoryId) {
+  const categoryIndex = categories.findIndex(category => category.id == categoryId);
+  if (categoryIndex > -1) {
+    categories.splice(categoryIndex, 1);
+    setCategoriesToBackend(categories);
   }
 }
 
@@ -381,8 +391,14 @@ function createNewCategory() {
  */
 function getCategory(id) {
   cat = categories.find(c => c.id == id )
-  category = cat.name;
-  color = cat.color;
+  if (cat) {
+    category = cat.name;
+    color = cat.color;  
+  }
+  else {
+    clearCategory();
+
+  }
   closeCategoryList();
 }
 
@@ -410,44 +426,17 @@ function clearAll() {
   window.location.href = "add_task.html";
 }
 
-/**
- * checks if contact is already in assign to and disable the name if so
- * @param {id} contact = id of contact
- */
-function renderNoAssignToContacts(contact) {
-  for (let j = 0; j < assignTo.length; j++) {
-    if (document.getElementById(`${contact["id"]}-add`).innerText == `${assignTo[j]["firstName"]} ${assignTo[j]["surname"]}`) {
-      document.getElementById(`${contact["id"]}-add`).classList.add("d-none");
-    }
-  }
-}
-
 /** display all contacts in assign to list */
 function renderAllContacts() {
-  for (let i = 0; i < contacts.length; i++) {
-    const contact = contacts[i];
+  contacts.forEach(contact => {
     const checkboxState = assignTo.some(aUser => aUser.id == contact.id) ? "checked" : "";
     document.getElementById("AssignToList").innerHTML += renderContactsHtml(contact,checkboxState);
-
-    if (document.getElementById(`${contact["id"]}-add`).innerText == `${user["firstName"]} ${user["surname"]}`) {
-      document.getElementById(`${contact["id"]}-add`).classList.add("d-none");
+    if (contact.id == user.id) {
+      document.getElementById(contact.id + '-add').style.order = -1
+      document.getElementById('assignToDisplayedName-' + contact.id).innerHTML = 'You'
+      document.getElementById('assignToDisplayedName-' + contact.id).classList.add('assignToSpanTextYou');
     }
-    renderNoAssignToContacts(contact);
-  }
-}
-
-/** checks if guest is logged in so display all users or a user is logged in and display the assign to you */
-function renderAddTaskContacts() {
-  if (user["firstName"] === "Ghost" && user["surname"] === "Guest") {
-    renderAllContacts();
-  }
-  else if (!assignTo.some((item) => item.firstName === `${user["firstName"]}`) &&
-    !assignTo.some((item) => item.surname === `${user["surname"]}`)) {
-    document.getElementById("AssignToList").innerHTML = assignToYouTemplate();
-    renderAllContacts();
-  } else {
-    renderAllContacts();
-  }
+  });
 }
 
 /**
@@ -629,7 +618,10 @@ function createNewSubtaskHtml(newSubtask) {
     return /*html*/ `   
     <div class="category-option inputHover" onclick="getCategory('${cat["id"]}')">
       <p>${cat["name"]}</p>
+      <div class="categoryListItemButtons">
       <span class="${cat["color"]} color-container"></span>
+      <img class="deleteCategoryIcon imgHover" src="../assets/img/trash.png" onclick="deleteCategory('${cat["id"]}')">
+      </div>
     </div>`;
   }
   
@@ -642,7 +634,7 @@ function createNewSubtaskHtml(newSubtask) {
       <div id="colorContainer">
     </div>
     <div class="dropdownContainer">
-      <img id="categoryListDropDownIcon" src="/assets/img/dropdown.svg" />
+      <img id="categoryListDropDownIcon" src="../assets/img/dropdown.svg" />
     </div>`;
   }
   
@@ -657,10 +649,10 @@ function createNewSubtaskHtml(newSubtask) {
     return /*html*/ `
     <div class="category inputHover" onclick="openCategoryList()" id="categoryInput">
     <div class="categoryInputContainer">
-      <input class="categoryInputField" type="text" placeholder="Enter a Category" id="categoryInputField"/>
+      <input class="categoryInputField" type="text" placeholder="Enter a Category"/>
     </div>
     <div>
-      <img id="categoryListDropDownIcon" src="/assets/img/dropdown.svg" />
+      <img id="categoryListDropDownIcon" src="../assets/img/dropdown.svg" />
     </div>
   `;
   }
@@ -670,7 +662,7 @@ function createNewSubtaskHtml(newSubtask) {
     <div class="category inputHover" onclick="toggleAssignList()" id="closedAssingToInput">
     <input class="categoryInputField" type="text" placeholder="Assign to"/>
     <div class="dropdownContainer">
-    <img id="assignToListDropDownIcon" src="/assets/img/dropdown.svg">
+    <img id="assignToListDropDownIcon" src="../assets/img/dropdown.svg">
   </div>
   </div>
   <div id="AssignToList" class="d-none categoryList">`;
@@ -683,7 +675,7 @@ function createNewSubtaskHtml(newSubtask) {
         <input class="categoryInputField" type="text" placeholder="Assign to"/>
       </div>
       <div class="dropdownContainer">
-        <img id="assignToListDropDownIcon" src="/assets/img/dropdown.svg" />
+        <img id="assignToListDropDownIcon" src="../assets/img/dropdown.svg" />
       </div>
     </div>
     <div id="AssignToList" class="d-none categoryList"></div>
@@ -694,7 +686,7 @@ function createNewSubtaskHtml(newSubtask) {
   function renderContactsHtml(contact,checkboxState) {
     return /*html*/ `
     <div onclick="assignContactTo('${contact["id"]}')" id="${contact["id"]}-add" class="assign-to-box inputHover" >
-      ${contact["firstName"]} ${contact["surname"]}
+      <span id="assignToDisplayedName-${contact["id"]}">${contact["firstName"]} ${contact["surname"]}</span>
       <input type="checkbox" id="${contact["id"]}-input" ${checkboxState} >
     </div>`;
   }

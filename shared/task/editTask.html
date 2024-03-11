@@ -1,9 +1,9 @@
 <main>
     <div class="editTaskContent">
       <div id="editTaskHeadlineText" class="popup-headline">
-        <img src="/assets/img/logo.png">
-        <h1>Add Task</h1>
-        <img src="/assets/img/close_white.png" id="closeButton" onclick="closeCard()">
+        <img src="../assets/img/logo.png">
+        <h2>Add Task</h2>
+        <img src="../assets/img/close_white.png" id="closeButton" onclick="closeCard()">
       </div>
     <div class="contentContainer">
       <form id="desktop" class="adding-todos" onsubmit="mustFields(); return false">
@@ -31,7 +31,7 @@
                   <input class="categoryInputField" type="text" placeholder="Enter a Category" id="category" readonly />
                 </div>
                 <div>
-                  <img id="categoryListDropDownIcon" src="/assets/img/dropdown.svg" />
+                  <img id="categoryListDropDownIcon" src="../assets/img/dropdown.svg" />
                 </div>
               </div>
               <div id="categoryList" class="d-none categoryList">
@@ -47,7 +47,7 @@
                   <input class="categoryInputField" type="text" placeholder="Assign to" readonly/>
                 </div>
                 <div>
-                  <img id="assignToListDropDownIcon" src="/assets/img/dropdown.svg">
+                  <img id="assignToListDropDownIcon" src="../assets/img/dropdown.svg">
                 </div>
               </div>
               <div id="AssignToList" class="d-none categoryList"></div>
@@ -68,19 +68,19 @@
               <div class="prio inputHover" id="urgent" onclick="addingPrio('urgent')">
                 <div class="d-flex">
                   <span>Urgent</span>
-                  <img id="urgent-img" src="/assets/img/prio-urgent.svg" />
+                  <img id="urgent-img" src="../assets/img/prio-urgent.svg" />
                 </div>
               </div>
               <div class="prio inputHover" id="medium" onclick="addingPrio('medium')">
                 <div class="d-flex">
                   <span>Medium</span>
-                  <img id="medium-img" src="/assets/img/prio-medium.svg" />
+                  <img id="medium-img" src="../assets/img/prio-medium.svg" />
                 </div>
               </div>
               <div class="prio inputHover" id="low" onclick="addingPrio('low')">
                 <div class="d-flex">
                   <span>Low</span>
-                  <img id="low-img" src="/assets/img/prio-low.svg" />
+                  <img id="low-img" src="../assets/img/prio-low.svg" />
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@
           <p class="text">Subtasks</p>
           <div class="subtask-input" id="addNewSubtask">
             <input class="inputHover" placeholder="Add new Subtasks" id="input-subTask" readonly onclick="addNewSubtask()" />
-            <img class="plus" src="/assets/img/plus.svg" onclick="addNewSubtask()" />
+            <img class="plus" src="../assets/img/plus.svg" onclick="addNewSubtask()" />
           </div>
           <div class="check">
             <div class="subtasks" id="newSubtask"></div>
@@ -109,13 +109,13 @@
     </div>
       <div class="buttons">
         <button class="secondary-Button" id="taskClearButton" onclick="clearEditTaskData()">
-          Clear <img src="/assets/img/clear.svg" />
+          Clear <img src="../assets/img/clear.svg" />
         </button>
         <button class="secondary-Button" id="taskCloseButton" onclick="closeAddTaskContainer()">
-          Close <img src="/assets/img/arrow-59-32.png" />
+          Close <img src="../assets/img/arrow-59-32.png" />
         </button>
         <button class="primary-Button" type="submit" id="taskSaveButton">
-          Create Task<img src="/assets/img/check.svg" />
+          Create Task<img src="../assets/img/check.svg" />
         </button>
       </div>
     </div>

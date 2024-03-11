@@ -74,7 +74,7 @@ function openCardHtml() {
             </div>
             <div class="text align-center">
                 <p><b>Priority:</b></p> <p class="${currentTask["prio"]} open-task-card-prio">${currentTask["prio"]} 
-                <img src="/assets/img/${currentTask["prio"]}-white.svg"></p>
+                <img src="../assets/img/${currentTask["prio"]}-white.svg"></p>
             </div>
             <div id="subtask">
                 <p class="text"><b>Subtask:</b></p>
@@ -148,7 +148,7 @@ function editCardHtmlTemplate(id) {
   return /*html*/`
   <div onclick="closeAssignListEdit()" class="editCardContainer" >
     <div onclick="closeCard()" class="closeImgEdit"><img src="../assets/img/close.png"></div>
-      <div w3-include-html="/shared/task/editTask.html"></div>
+      <div w3-include-html="../shared/task/editTask.html"></div>
     </div>
   </div>
       `;
@@ -166,7 +166,7 @@ function openAssignToListEditHtml() {
   return /*html*/ `
     <div class="category" onclick="closeAssignListEdit()" id="closedAssingToInputEdit">
       <input class="categoryInputField" type="text" placeholder="Assign to"/>
-      <img class="rotate90deg" src="/assets/img/dropdown.svg">
+      <img class="rotate90deg" src="../assets/img/dropdown.svg">
     </div>
     <div id="AssignToListEdit" class="d-none categoryList">`;
 }
@@ -178,7 +178,7 @@ function closeAssignListEditHtml() {
             <input class="categoryInputField" type="text" placeholder="Assign to"/>
           </div>
           <div>
-            <img src="/assets/img/dropdown.svg" />
+            <img src="../assets/img/dropdown.svg" />
           </div>
         </div>
         <div id="assignToListEdit" class="d-none categoryList"></div>

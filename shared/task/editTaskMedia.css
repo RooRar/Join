@@ -1,3 +1,10 @@
+@media (max-width: 1100px) {
+  .buttons {  
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 900px) {
   .editTaskContent {
     width: 100vw;
@@ -27,13 +34,8 @@
     justify-content: center;  
   }
 
-  .buttons {
-    position: relative !important;
-    justify-content: center;
-    right: unset;
-  }
-
   .primary-Button, .secondary-Button {
     gap: 5px !important;
   }
+
 }

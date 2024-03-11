@@ -88,12 +88,15 @@ async function showContactDetails(j) {
  * @param {id} j = id of contact
  */
 function openEditContactContainer(j) {
+    document.getElementById('createContactButton').onclick = function() {saveEdit(j)};
     document.getElementById('emailIsAlreadyExistingEditContact').classList.add('dp-none');
     document.getElementById('addContactFirstNameInput').value = `${contacts[j]["firstName"]}`;
     document.getElementById('addContactSurnameInput').value = `${contacts[j]["surname"]}`;
     document.getElementById('addContactMailInput').value = `${contacts[j]["mail"]}`;
     document.getElementById('addContactPhoneInput').value = `${contacts[j]["phone"]}`;
     changeEditImg(j);
+    document.getElementById('addContactHeadline').textContent = 'Edit Contact';
+    document.getElementById('createContactButtonText').textContent = 'Save Contact';
     document.getElementById('addContactContainer').classList.remove('moveContainerOutMedia');
     document.getElementById('addContactContainer').classList.remove('dp-none');
     document.getElementById('bg-contacts').classList.remove('dp-none');
@@ -101,12 +104,15 @@ function openEditContactContainer(j) {
 
 /** opens the new contact container */
 function openNewContactContainer() {
+    document.getElementById('createContactButton').onclick = function() {addContact()};
     let firstName = document.getElementById('addContactFirstNameInput');
     document.getElementById('emailIsAlreadyExistingAddContact').classList.add('dp-none');
     firstName.value = '';
     document.getElementById('addContactSurnameInput').value = '';
     document.getElementById('addContactMailInput').value = '';
     document.getElementById('addContactPhoneInput').value = '';
+    document.getElementById('addContactHeadline').textContent = 'Add Contact';
+    document.getElementById('createContactButtonText').textContent = 'Create Contact';
     document.getElementById('addContactContainer').classList.remove('moveContainerOutMedia');
     document.getElementById('addContactContainer').classList.remove('dp-none');
     document.getElementById('bg-contacts').classList.remove('dp-none');
@@ -158,10 +164,11 @@ async function ifAddContactCorrect(firstName, surname, mail, phone) {
  * @param {id} j = id of contact
  */
 async function saveEdit(j) {
-    let firstName = document.getElementById('editContactFirstNameInput').value;
-    let surname = document.getElementById('editContactSurnameInput').value;
-    let mail = document.getElementById('editContactMailInput').value;
-    let phone = document.getElementById('editContactPhoneInput').value;
+    let firstName = document.getElementById('addContactFirstNameInput').value;
+    let surname = document.getElementById('addContactSurnameInput').value;
+    let mail = document.getElementById('addContactMailInput').value;
+    let phone = document.getElementById('addContactPhoneInput').value;
+
     let checkIfMailExist = await contacts.find(c => c.mail == mail);
     if (checkIfMailExist && checkIfMailExist.mail == contacts[j]["mail"]) {
         await ifMailDoesNotExist(firstName, surname, mail, phone, j);

@@ -1,10 +1,10 @@
-body {
-  background: rgba(246, 247, 248, 1);
-  overflow-x: hidden;
-}
-
 button {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.board {
+  padding: 20px 20px 20px 20px;
+  overflow-y: auto;
 }
 
 .bg {
@@ -49,13 +49,12 @@ button {
 }
 
 .board-search input {
-  width: 231px;
+  width: 100%;
   height: 51px;
   border-radius: 10px;
   border: 1px solid lightgray;
   font-size: 16px;
   font-family: 'Inter';
-  padding-left: 21px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
@@ -66,7 +65,7 @@ button {
   font-weight: 700;
   font-size: 21px;
   margin-left: 43px;
-  z-index: 10;
+  z-index: 5;
 }
 
 .add-task img {
@@ -95,12 +94,13 @@ button {
   display: flex;
   justify-content: space-evenly;
   max-width: 2048px;
-  gap: 15px;
+  gap: 1%;
 }
 
 .status {
-  width: 250px;
+  min-width: 252px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  margin-top: 1%;
 }
 
 .status-headline {

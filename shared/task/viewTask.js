@@ -14,7 +14,7 @@ function setData() {
     document.getElementById("taskId").innerHTML = currentTask.id;
     document.getElementById("taskAssignTo").innerHTML = currentTask.assignTo;
     document.getElementById("taskDueDate").innerHTML = currentTask.date;
-    document.getElementById("taskPriority").innerHTML =  `<img src="/assets/img/${currentTask.prio}-white.svg">`; 
+    document.getElementById("taskPriority").innerHTML =  `<img src="../assets/img/${currentTask.prio}-white.svg">`; 
 
     document.getElementById("taskSubtask").innerHTML = "";
     currentTask.subTask.forEach( subTask => {

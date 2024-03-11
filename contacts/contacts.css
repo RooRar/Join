@@ -1,9 +1,3 @@
-body {
-    margin: 0;
-    font-family: 'Inter';
-    font-style: normal;
-}
-
 .bg-contacts {
     position: fixed;
     top: 0;
@@ -358,6 +352,7 @@ body {
 }
 
 .contactsNewContact {
+    z-index: 100;
     display: flex;
     position: absolute;
     width: 193px;

@@ -1,3 +1,13 @@
+body {
+    margin: 0;
+    background: #F6F7F8;
+    font-family: 'Inter';
+    font-style: normal;
+    max-width: 100%;
+    max-height: 100vh;
+	height: 100vh;
+}
+
 h1 {
 	font-size: 48px;
 	margin-bottom: 6px;
@@ -7,7 +17,13 @@ h1 {
 }
 
 .headline {
-	margin: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 40px;
+    color: white;
+	margin: 0px
 }
 
 .popup-headline {
@@ -16,7 +32,7 @@ h1 {
     flex-direction: column;
 	background-color:#2A3647; 	
     color: white;
-	padding: 0px 20px 0px 20px;
+    padding: 5px 20px 5px 20px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     flex-direction: row;
     justify-content: space-between;
@@ -61,12 +77,13 @@ img {
 	border: unset;
 	cursor: pointer;
 	transition: transform .2s; 
+	box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 .primary-Button:hover {
 	background-color: #2993c2;
-	box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 	transform: scale(1.1);
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .primary-Button img {
@@ -93,6 +110,7 @@ img {
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 	cursor: pointer;
 	transform: scale(1.1);
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .secondary-Button:hover img {
@@ -128,4 +146,17 @@ img {
     flex-direction: column;
     display: flex;
   }
+}
+
+
+@media (max-width: 700px) {
+	.popup-headline {
+		padding: 5px 0px 5px;
+	}
+	h1 {
+		font-size: 38px;
+	}
+	h2, .taskTitle {
+		font-size: 30px;
+	}
 }

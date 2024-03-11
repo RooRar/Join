@@ -41,11 +41,6 @@
     width: 16px;
   }
 
-  .buttons {
-    top: 495px;
-    left: 545px;
-  }
-
   #emptySubtask {
     left: 550px;
   }
@@ -83,11 +78,6 @@
 
   .adding-info {
     padding-left: 20px;
-  }
-
-  .buttons {
-    top: 480px;
-    left: 390px;
   }
 
   #emptySubtask {
@@ -197,10 +187,6 @@
   }
 
   .clear {
-    display: none;
-  }
-
-  .buttons {
     display: none;
   }
 

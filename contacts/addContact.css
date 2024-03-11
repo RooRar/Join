@@ -224,7 +224,7 @@ input::-webkit-inner-spin-button {
 }
 
 .cancelButton:hover img {
-    content: url("/assets/img/cancelHover.png")
+    content: url("../assets/img/cancelHover.png")
 }
 
 .createContactButton {
