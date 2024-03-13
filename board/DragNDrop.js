@@ -62,7 +62,7 @@ function moveTo(status) {
 
 /** emptys "to do" container */
 function emptyContainerTodo() {
-  let statusContainerTodo = tasks.filter((tasks) => tasks["status"] == "to do");
+  let statusContainerTodo = tasks.filter((tasks) => tasks["status"] == "to do").sort();
   document.getElementById(`to do`).innerHTML = "";
 
   for (let i = 0; i < statusContainerTodo.length; i++) {
@@ -76,7 +76,7 @@ function emptyContainerTodo() {
 function emptyContainerProgress() {
   let statusContainerProgress = tasks.filter(
     (tasks) => tasks["status"] == "in progress"
-  );
+  ).sort();
   document.getElementById("in progress").innerHTML = "";
 
   for (let i = 0; i < statusContainerProgress.length; i++) {
@@ -90,7 +90,7 @@ function emptyContainerProgress() {
 function emptyContainerFeedback() {
   let statusContainerFeedback = tasks.filter(
     (tasks) => tasks["status"] == "awaiting feedback"
-  );
+  ).sort();
   document.getElementById("awaiting feedback").innerHTML = "";
 
   for (let i = 0; i < statusContainerFeedback.length; i++) {
@@ -102,7 +102,7 @@ function emptyContainerFeedback() {
 
 /** emptys "done" container */
 function emptyContainerDone() {
-  let statusContainerDone = tasks.filter((tasks) => tasks["status"] == "done");
+  let statusContainerDone = tasks.filter((tasks) => tasks["status"] == "done").sort();
 
   document.getElementById("done").innerHTML = "";
 

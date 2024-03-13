@@ -23,6 +23,7 @@ async function signUp() {
  */
 function ifSignUpCorrect(firstName, surname, mail, password) {
     contacts.push({
+        "id": getNewId(),
         "firstName": firstName.charAt(0).toUpperCase() + firstName.slice(1),
         "surname": surname.charAt(0).toUpperCase() + surname.slice(1),
         "mail": mail,

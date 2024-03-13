@@ -91,6 +91,7 @@ button {
 }
 
 .status-container {
+  height: fit-content;
   display: flex;
   justify-content: space-evenly;
   max-width: 2048px;

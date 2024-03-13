@@ -18,7 +18,7 @@ function setData() {
 
     document.getElementById("taskSubtask").innerHTML = "";
     currentTask.subTask.forEach( subTask => {
-        document.getElementById("taskSubtask").innerHTML += subTask + '<br>';
+        document.getElementById("taskSubtask").innerHTML += subTask.name + '<br>';
 
     });
 }

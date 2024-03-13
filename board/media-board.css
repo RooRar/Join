@@ -16,6 +16,7 @@
 
   .status-container {
     flex-wrap: wrap;
+    height: 120px;
   }
 }
 

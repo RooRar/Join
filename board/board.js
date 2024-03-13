@@ -23,28 +23,35 @@ function showAddTaskTemplate() {
 
 /** displays the subtask & assign to length */
 function renderArrays() {
-  checkSubtask();
+  displaySubtaskProgress();
   checkAssignTo();
 }
 
 /** displays the subtask length */
-function checkSubtask() {
-  currentTask["subTask"].forEach(subTask => {
-    let calcWidth = currentTask["subTaskFinish"] / currentTask["subTask"].length * 100;
-    document.getElementById(`subtaskContainer${currentTask["id"]}`).innerHTML = subtaskHtml(calcWidth);
-  });
+function displaySubtaskProgress() {
+  if (currentTask.subTask.length > 0) {
+    let subTaskSum = currentTask.subTask.length;
+    let subTaskFinishedSum = currentTask.subTask.filter(st => st.finished == true).length;
+    let progress = subTaskFinishedSum / subTaskSum * 100;
+    document.getElementById(`subtaskContainer${currentTask["id"]}`).innerHTML = subtaskHtml(progress,subTaskSum, subTaskFinishedSum);  
+  }
+
+  // currentTask["subTask"].forEach(subTask => {
+  //   let calcWidth = currentTask["subTask"] / currentTask["subTask"].length * 100;
+  //   document.getElementById(`subtaskContainer${currentTask["id"]}`).innerHTML = subtaskHtml(calcWidth);
+  // });
 }
 
 /** displays the assign to length */
 function checkAssignTo() {
-  if (currentTask["contact"].length == 0) {
+  if (currentTask["contact"]?.length == 0) {
     document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML = "";
   } else {
-    if (currentTask["contact"].length <= 3) {
+    if (currentTask["contact"]?.length <= 3) {
       currentTask.contact.forEach(c => {
-        getCharAtNull(c.id);
-        getContactColor(c.id);
-        document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML += assignToHtml();
+          getCharAtNull(c.id);
+          getContactColor(c.id);
+          document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML += assignToHtml();            
       })
     } else {
       assignToBigger3();
@@ -55,13 +62,11 @@ function checkAssignTo() {
 /** displays the assign to if length bigger than 3 */
 function assignToBigger3() {
   for (let j = 0; j < 2; j++) {
-    getCharAtNull(j);
-    getContactColor(j);
-    document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML +=
-      assignToBigger3Html(j);
+    getCharAtNull(currentTask.contact[j].id);
+    getContactColor(currentTask.contact[j].id);
+    document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML += assignToBigger3Html(currentTask.contact[j].id);
   }
-  document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML +=
-    `<p class="contact" style="background-color: #2A3647">+${currentTask["contact"].length - 2}</p>`;
+  document.getElementById(`contactContainer${currentTask["id"]}`).innerHTML += `<p class="contact" style="background-color: #2A3647">+${currentTask["contact"].length - 2}</p>`;
 }
 
 /**
@@ -112,8 +117,7 @@ function getSubtaskForOpenedCard(id) {
   } else {
     for (let j = 0; j < currentTask["subTask"].length; j++) {
       let currentTaskId = currentTask["id"] + j;
-      document.getElementById(`openedSubtaskContainer${id}`).innerHTML +=
-        openCardSubtaskToHtml(currentTaskId, j);
+      document.getElementById(`openedSubtaskContainer${id}`).innerHTML += openCardSubtaskToHtml(currentTaskId, j);
       getSubtaskChecked(currentTaskId, j);
     }
   }

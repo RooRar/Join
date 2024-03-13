@@ -1,4 +1,3 @@
-let tasks = [];
 let urgentTasksCount = 0;
 let toDoTasksCount = 0;
 let doneTasksCount = 0;
@@ -9,7 +8,6 @@ let user;
 /** loads the summary page */
 async function initSummary() {
     await init();
-    tasks = await JSON.parse(await backend.getItem('tasks')) || [];
     setContent();
 }
 

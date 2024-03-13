@@ -7,7 +7,6 @@ let loadedTask;
  */
 function editCardHtml(taskId) {
   loadTask(taskId);
-  //document.getElementById("openTaskCard").innerHTML = editCardHtmlTemplate(taskId);
 }
 
 /** displays all user images which are already assign to the task */
@@ -163,7 +162,7 @@ function checkPrioEdit(newprio) {
  */
 function getPrioEdit(prio) {
   document.getElementById(prio + '-edit').classList.add(prio);
-  document.getElementById(`${prio}-img-edit`).src = `/assets/img/${prio}-white.svg`;
+  document.getElementById(`${prio}-img-edit`).src = `../assets/img/${prio}-white.svg`;
   if (document.getElementById(prio + '-edit') == document.getElementById('urgent-edit')) {
     ifPrioEditSameUrgent();
   }
@@ -205,7 +204,7 @@ function ifPrioEditSameLow() {
  */
 function takePrioEdit(prio) {
   document.getElementById(prio + '-edit').classList.remove(prio);
-  document.getElementById(`${prio}-img-edit`).src = `/assets/img/prio-${prio}.svg`;
+  document.getElementById(`${prio}-img-edit`).src = `../assets/img/prio-${prio}.svg`;
 }
 
 /** opens assign to list container */

@@ -1,5 +1,6 @@
 const mediaQueryList = window.matchMedia("(max-width: 900px)");
 let contactDetailsIsOpened = false;
+let loadedContactId;
 let contacts = [];
 let letters = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
 let guestUser =
@@ -74,6 +75,7 @@ function checkIfLetterExist(contactsAdressContainer) {
  */
 async function showContactDetails(j) {
     loadContacts();
+    loadedContactId = j;
     document.getElementById('contactDetails').classList.remove("dp-none");
     document.getElementById('contactDetails').innerHTML = showContactDetailsTemplate(j);
     document.getElementById(`adressField${j}`).style.background = "#2A3647";
@@ -88,6 +90,7 @@ async function showContactDetails(j) {
  * @param {id} j = id of contact
  */
 function openEditContactContainer(j) {
+    document.getElementById('addContactDeleteIcon').classList.remove('dp-none');
     document.getElementById('createContactButton').onclick = function() {saveEdit(j)};
     document.getElementById('emailIsAlreadyExistingEditContact').classList.add('dp-none');
     document.getElementById('addContactFirstNameInput').value = `${contacts[j]["firstName"]}`;
@@ -104,6 +107,7 @@ function openEditContactContainer(j) {
 
 /** opens the new contact container */
 function openNewContactContainer() {
+    document.getElementById('addContactDeleteIcon').classList.add('dp-none');
     document.getElementById('createContactButton').onclick = function() {addContact()};
     let firstName = document.getElementById('addContactFirstNameInput');
     document.getElementById('emailIsAlreadyExistingAddContact').classList.add('dp-none');
@@ -206,12 +210,14 @@ async function ifMailDoesNotExist(firstName, surname, mail, phone, j) {
  * deletes contact of contacts
  * @param {id} j = id of contact
  */
-async function deleteContact(j) {
-    if (contacts[j]["mail"] == user["mail"]) {
+async function deleteContact() {
+    if (loadedContactId == user.id) {
         changeUserToGuestUser();
     }
-    await checkIfTaskIncludeContact(j);
-    contacts.splice(j, 1);
+    await deteleContactFromTask(loadedContactId);
+    const deleteContactIndex = contacts.findIndex(c => c.id == loadedContactId);
+    if (deleteContactIndex > -1)
+        contacts.splice(deleteContactIndex, 1);
     contactCreatedOrDeletedAnimation("Deleted");
     closeEditSaveDeleteContactContainer();
     await save();
@@ -239,17 +245,15 @@ function changeUserToGuestUser() {
  * checks if task included deleted contact and deletes contact out of task
  * @param {id} j = id of contact
  */
-async function checkIfTaskIncludeContact(j) {
-    for (let t = 0; t < tasks.length; t++) {
-        let task = tasks[t];
-        for (let k = 0; k < task["contact"].length; k++) {
-            let contact = task["contact"][k];
-            if (contact["firstName"] == contacts[j]["firstName"] && contact["surname"] == contacts[j]["surname"]) {
-                task["contact"].splice(k, 1);
-            }
+async function deteleContactFromTask(contactId) {
+    tasks.forEach(async task => {
+        foundContactIdIndex = task.contact.findIndex(c => c.id == contactId);
+        if (foundContactIdIndex > -1)
+        {
+            task.contact.splice(foundContactIdIndex,1);   
+            await addTasks();     
         }
-        await addTasks();
-    }
+    });
 }
 
 /** close new contact container */
@@ -284,7 +288,6 @@ function openAddTaskContainer(status) {
 }
 
 function openEditTaskContainer() {
-    currentStatus = 'to do';
     document.getElementById('addTaskContainerContacts').classList.remove('dp-none');
     document.getElementById('taskBoard').classList.remove('moveContainerOutMedia');
 }
@@ -389,8 +392,7 @@ function randomBgColor() {
 
 /** saves contacts into database */
 async function save() {
-    let contactsASText = JSON.stringify(contacts);
-    await backend.setItem('contactsASText', contactsASText);
+    await backend.setItem('contactsASText', JSON.stringify(contacts));
 }
 
 /** loads contacts of database */

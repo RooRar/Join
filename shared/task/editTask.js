@@ -1,23 +1,17 @@
-let tasks = [];
 let prios = [];
 let subTask = [];
+let subTaskFinish = [];
 let assignTo = [];
 let category;
 let color;
 let currentPrio;
 let currentId;
-let currentStatusTemp;
 let user = JSON.parse(localStorage.getItem("user")) || [];
 
 async function loadAll() {
   await init();
-  getTasksId();
   renderAssignToList();
   setEditTaskData(undefined);
-}
-
-function setNewTask() {
-  getTasksId();
 }
 
 function setEditTaskData(task) {
@@ -29,7 +23,7 @@ function setEditTaskData(task) {
     document.getElementById("input-date").value = task.date;
     
     currentId = task.id;
-    assignTo = task.contact;
+    assignTo = task.contact ? task.contact : [];
     currentStatus = task.status;
     renderImgEdit();
     category = task.category;
@@ -37,19 +31,19 @@ function setEditTaskData(task) {
     closeCategoryList();
     currentPrio = task.prio;
     getPrio(task.prio);
+    subTask = [];
+    document.getElementById("newSubtask").innerHTML = '';
     task.subTask.forEach(task => {
       subTask.push(task);
       document.getElementById("newSubtask").innerHTML += createNewSubtaskHtml(task);
     });
-    if (!document.getElementById("taskClearButton").classList.contains('d-none'))
-      document.getElementById("taskClearButton").classList.add('d-none');    
+    document.getElementById("taskClearButton").classList.add('d-none');    
   }
   else {
-    getTasksId();
+    currentId = getNewId();
     document.getElementById("editTaskHeadlineText").innerHTML =  `<img src="../assets/img/logo.png"><h2>Add Task</h2><img src="../assets/img/close_white.png" id="closeButton" onclick="closeAddTaskContainer()">`;
     document.getElementById("taskSaveButton").innerHTML = `Create Task<img src="../assets/img/check.svg" />`
-    if (document.getElementById("taskClearButton").classList.contains('d-none'))
-      document.getElementById("taskClearButton").classList.remove('d-none');
+    document.getElementById("taskClearButton").classList.remove('d-none');
     clearEditTaskData();
   }
 }
@@ -58,7 +52,6 @@ function clearEditTaskData() {
   assignTo = [];
   currentStatus = 'to do';
   category = "";
-  clearSubtask();
   renderImgEdit();
   document.getElementById("input-title").value = "";
   document.getElementById("input-description").value = "";
@@ -71,12 +64,8 @@ function clearEditTaskData() {
   document.getElementById('medium').classList.remove('medium');
   document.getElementById('urgent').classList.remove('urgent');
   document.getElementById('newSubtask').innerHTML = '';
+  subTask = [];
   
-}
-
-/** creates a random task id */
-function getTasksId() {
-  currentId = Math.random() + tasks.length;
 }
 
 /** displays all user images which are already assign to the task */
@@ -147,7 +136,7 @@ function checkPrio(newprio) {
  */
 function getPrio(prio) {
   document.getElementById(prio).classList.add(prio);
-  document.getElementById(`${prio}-img`).src = `/assets/img/${prio}-white.svg`;
+  document.getElementById(`${prio}-img`).src = `../assets/img/${prio}-white.svg`;
   prios = [prio];
 }
 
@@ -157,7 +146,7 @@ function getPrio(prio) {
  */
 function takePrio(prio) {
   document.getElementById(prio).classList.remove(prio);
-  document.getElementById(`${prio}-img`).src = `/assets/img/prio-${prio}.svg`;
+  document.getElementById(`${prio}-img`).src = `../assets/img/prio-${prio}.svg`;
 }
 
 /** checks if every necessary field is filled */
@@ -172,7 +161,7 @@ function mustFields() {
     mustFieldsOnlyCategory();
   }
   else {
-    getValuesFromInputs();
+    createTask();
   }
 }
 
@@ -210,49 +199,34 @@ function mustFieldsOnlyCategory() {
   }, 1500);
 }
 
-/** gets the values of the inputfields */
-function getValuesFromInputs() {
-  let title = document.getElementById("input-title");
-  let description = document.getElementById("input-description");
-  let date = document.getElementById("input-date");
-  createTask(title, description, date);
-}
-
 /**
  * creates a new task
- * @param {input} title = inputfield of the title
- * @param {input} description = inputfield of the description
- * @param {input} date = inputfield of the date
  */
-function createTask(title, description, date) {
-  
+function createTask() {
   const taskIndex = tasks.findIndex(tsk => tsk.id == currentId)
   if ( taskIndex > -1)
     tasks.splice(taskIndex,1);
 
   tasks.push({
-    title: title.value,
-    description: description.value,
-    date: date.value,
+    title: document.getElementById("input-title").value,
+    description: document.getElementById("input-description").value,
+    date: document.getElementById("input-date").value,
     prio: currentPrio,
     category: category,
     color: color,
     subTask: subTask,
-    contact: assignTo,
+    contact: assignTo ? assignTo : [],
     status: currentStatus,
-    subTaskFinish: 0,
+    subTaskFinish: subTaskFinish,
     id: currentId,
   });
-  addTaskAndLinkToBoard(title, description, date);
+  addTaskAndLinkToBoard();
 }
 
 /**
  * add the task and link to board page
- * @param {input} title = inputfield of the title
- * @param {input} description = inputfield of the description
- * @param {input} date = inputfield of the date
  */
-function addTaskAndLinkToBoard(title, description, date) {
+function addTaskAndLinkToBoard() {
   addTasks();
   linkToBoard();
 }
@@ -263,9 +237,7 @@ function linkToBoard() {
   setTimeout(function () {
     window.location.href = "../board/board.html";
     document.getElementById("addedToBoard").classList.add("d-none");
-    title.value = "";
-    description.value = "";
-    date.value = "";
+    clearEditTaskData();
     currentTask = undefined;
   }, 1500);
 }
@@ -288,11 +260,19 @@ function createNewSubtask() {
     document.getElementById("emptySubtask").classList.remove("d-none");
   } else {
     document.getElementById("emptySubtask").classList.add("d-none");
-    let newSubtask = document.getElementById("new-subTask").value;
-    subTask.push(newSubtask);
-    document.getElementById("newSubtask").innerHTML += createNewSubtaskHtml(newSubtask);
+    let newSubTask = {id: getNewId(), name: document.getElementById("new-subTask").value, finished: false};
+    subTask.push(newSubTask);
+    document.getElementById("newSubtask").innerHTML += createNewSubtaskHtml(newSubTask);
     clearSubtask();
   }
+}
+
+function toggleSubTask(subTaskId) {
+  const subtaskIndex = subTask.findIndex(s => s.id == subTaskId);
+  if (subtaskIndex > -1) {
+    subTask[subtaskIndex].finished = subTask[subtaskIndex].finished == true ? false : true;
+  } 
+
 }
 
 /** opens "category" list */
@@ -382,6 +362,9 @@ function deleteCategory(categoryId) {
     categories.splice(categoryIndex, 1);
     setCategoriesToBackend(categories);
   }
+  closeCategoryList();
+  document.getElementById('category').value = "";
+  document.getElementById('colorContainer').innerHTML = ""
 }
 
 /**
@@ -397,7 +380,6 @@ function getCategory(id) {
   }
   else {
     clearCategory();
-
   }
   closeCategoryList();
 }
@@ -420,11 +402,6 @@ function clearCategory() {
   document.getElementById("newCategoryInput").classList.add("d-none");
   document.getElementById("categoryListContainer").innerHTML = clearCategoryHtml();
 } 
-
-/** clears add task page */  
-function clearAll() {
-  window.location.href = "add_task.html";
-}
 
 /** display all contacts in assign to list */
 function renderAllContacts() {
@@ -460,125 +437,29 @@ function assignContactTo(contactId) {
   renderImgEdit();
 }
 
-/**
- * adds or remove  assign to you
- * @param {string} firstName = first name of assign to contact
- * @param {string} surname = surname of assign to contact
- */
-function assignContactToYou(firstName, surname) {
-  if (document.getElementById(`${user["mail"]}-inputYou`).checked == false) {
-    document.getElementById(`${user["mail"]}-inputYou`).click();
-    assignTo.push({
-      firstName: firstName,
-      surname: surname,
-    });
-  } else if (
-    document.getElementById(`${user["mail"]}-inputYou`).checked == true
-  ) {
-    for (let j = 0; j < assignTo.length; j++) {
-      if (assignTo[j]["firstName"] == firstName) {
-        document.getElementById(`${user["mail"]}-inputYou`).click();
-        assignTo.splice([j]);
-      }
-    }
-  }
-}
-
-/**
- * push new subtask to subtask array
- * @param {string} newSubtask = name of new subtask
- */
-function newSubTaskValue(newSubtask) {
-  subTask.push(newSubtask);
-}
-
 /** adds task of database */
 async function addTasks() {
   await backend.setItem("tasks", JSON.stringify(tasks));
 }
 
-/**
-* creates a new task in template
- * @param {input} title = inputfield of the title
- * @param {input} description = inputfield of the description
- * @param {input} date = inputfield of the date
- */
-function pushTaskOfTemplate(title, description, date) {
-  tasks.push({
-    title: title.value,
-    description: description.value,
-    date: date.value,
-    prio: currentPrio,
-    category: category,
-    color: color,
-    subTask: subTask,
-    contact: assignTo,
-    status: currentStatusTemp,
-    subTaskFinish: 0,
-    id: currentId,
-  });
-}
-
-/** sets current status if no status is set */
-function setCurrentStatus() {
-  if (currentStatusTemp == undefined) { currentStatusTemp = "to do" }
-  else { currentStatusTemp };
-}
-
-/** get values of inputfields in template */
-function getValuesFromInputsTemplate() {
-  let templateTitle = document.getElementById("inputTitleTemplate");
-  let templateDescription = document.getElementById("inputDescriptionTemplate");
-  let templateDate = document.getElementById("inputDateTemplate");
-  createTaskTemplate(templateTitle, templateDescription, templateDate);
-}
-
-/**
- * add the task in template and link to board page if not on board page
- * @param {input} title = inputfield of the title
- * @param {input} description = inputfield of the description
- * @param {input} date = inputfield of the date
- */
-async function createTaskTemplate(title, description, date) {
-  getTasksId();
-  setCurrentStatus();
-  pushTaskOfTemplate(title, description, date);
-  if (window.location.pathname == '/join/board/board.html' ||
-    window.location.pathname == '/board/board.html') {
-    addTasks();
-    await updateHtml();
-    title.value = "";
-    description.value = "";
-    date.value = "";
-    closeAddTaskContainer();
-  }
-  else {
-    addTaskAndLinkToBoard(title, description, date);
-  }
-}
-
 function createNewSubtaskHtml(newSubtask) {
-
     return /*html*/ `
             <div class="checkSubtask-Container">
-              <input readonly style="z-index: -1" type="checkbox">
-              <span> ${newSubtask}</span>
-          </div>
-      `;
+              <input id="SubTaskCheckBox-${newSubtask["id"]}" readonly style="z-index: -1" type="checkbox" onclick="toggleSubTask('${newSubtask["id"]}')" ${newSubtask.finished ? 'checked' : ''}>
+              <span> ${newSubtask["name"]}</span>
+          </div>`;
   }
   
   function clearSubtaskHtml() {
     return /*html*/ `<input class="task-board-input-fields" placeholder="Add new Subtasks" id="input-subTask" readonly onclick="addNewSubtask()"/>
-    <img class="plus" src="../assets/img/plus.svg" onclick="addNewSubtask()">
-    `;
+    <img class="plus" src="../assets/img/plus.svg" onclick="addNewSubtask()">`;
   }
   
   function addNewSubtaskHtml() {
     return /*html*/ `
       <input type="text" type="text" maxlength="20" class="task-board-input-fields" placeholder="Add new Subtasks" id="new-subTask"/>
       <img class="cancelSubtask textHover" src="../assets/img/clear.svg" onclick="clearSubtask()">
-      <img class="checkSubtask textHover" src="../assets/img/check-black.svg" onclick="createNewSubtask()" onsubmit="create()">
-    `;
+      <img class="checkSubtask textHover" src="../assets/img/check-black.svg" onclick="createNewSubtask()" onsubmit="create()">`;
   }
   
   function newCategoryHtml() {
@@ -595,8 +476,7 @@ function createNewSubtaskHtml(newSubtask) {
       <span class="orange color-container" id="orange" onclick="getColorForCategory('orange')"></span>
       <span class="purple color-container" id="purple" onclick="getColorForCategory('purple')"></span>
       <span class="darkblue color-container" id="darkblue" onclick="getColorForCategory('darkblue')"></span>
-    </div>
-    `;
+    </div>`;
   }
   
   function openCategoryListHtml() {
@@ -620,7 +500,7 @@ function createNewSubtaskHtml(newSubtask) {
       <p>${cat["name"]}</p>
       <div class="categoryListItemButtons">
       <span class="${cat["color"]} color-container"></span>
-      <img class="deleteCategoryIcon imgHover" src="../assets/img/trash.png" onclick="deleteCategory('${cat["id"]}')">
+      <img class="deleteCategoryIcon imgHover" src="../assets/img/trash.png" onclick="event.stopPropagation(); deleteCategory('${cat["id"]}')">
       </div>
     </div>`;
   }
@@ -641,8 +521,7 @@ function createNewSubtaskHtml(newSubtask) {
   function newCreatedCategory(createdCategory) {
     return /*html*/ `  
     <p>${createdCategory}</p>
-    <span class="${color}"></span>
-    `;
+    <span class="${color}"></span>`;
   }
   
   function clearCategoryHtml() {
@@ -653,8 +532,7 @@ function createNewSubtaskHtml(newSubtask) {
     </div>
     <div>
       <img id="categoryListDropDownIcon" src="../assets/img/dropdown.svg" />
-    </div>
-  `;
+    </div>`;
   }
   
   function openAssignToListHtml() {
@@ -663,9 +541,9 @@ function createNewSubtaskHtml(newSubtask) {
     <input class="categoryInputField" type="text" placeholder="Assign to"/>
     <div class="dropdownContainer">
     <img id="assignToListDropDownIcon" src="../assets/img/dropdown.svg">
-  </div>
-  </div>
-  <div id="AssignToList" class="d-none categoryList">`;
+    </div>
+    </div>
+    <div id="AssignToList" class="d-none categoryList">`;
   }
   
   function closeAssignListHtml() {
@@ -679,8 +557,7 @@ function createNewSubtaskHtml(newSubtask) {
       </div>
     </div>
     <div id="AssignToList" class="d-none categoryList"></div>
-  </div>
-  `;
+    </div>`;
   }
   
   function renderContactsHtml(contact,checkboxState) {
@@ -688,14 +565,5 @@ function createNewSubtaskHtml(newSubtask) {
     <div onclick="assignContactTo('${contact["id"]}')" id="${contact["id"]}-add" class="assign-to-box inputHover" >
       <span id="assignToDisplayedName-${contact["id"]}">${contact["firstName"]} ${contact["surname"]}</span>
       <input type="checkbox" id="${contact["id"]}-input" ${checkboxState} >
-    </div>`;
-  }
-    
-  function assignToYouTemplate() {
-    return /*html*/ `
-    <div onclick="assignContactToYou('${user["firstName"]}','${user["surname"]}')" 
-    id="${user["mail"]}-addYou" class="assign-to-box inputHover" >
-      You
-      <input type="checkbox" id="${user["mail"]}-inputYou" >
     </div>`;
   }

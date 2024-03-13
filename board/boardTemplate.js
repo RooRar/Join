@@ -117,13 +117,13 @@ function openCardSubtaskToHtml(id, j) {
     `;
 }
 
-function subtaskHtml(width) {
+function subtaskHtml(progress,subTaskSum, subTaskFinishedSum) {
   return /*html*/ `
     <div class="align-center">
         <div class="progress">
-            <div class="the-progress" style="width: ${width}px; background-color: ${currentTask["color"]}"></div>
+            <div class="the-progress" style="width: ${progress}px; background-color: ${currentTask["color"]}"></div>
         </div>
-        <p>${currentTask['subTaskFinish']} / ${currentTask['subTask'].length}</p>
+        <p>${subTaskFinishedSum} / ${subTaskSum}</p>
     </div>
         `;
 }

@@ -59,13 +59,9 @@ input::-webkit-inner-spin-button {
 }
 
 .trashIcon {
-    width: 45px;
-    height: 45px;
+    height: 50px;
     object-fit: cover;
     display: flex;
-    position: absolute;
-    left: 765px;
-    top: 483px;
     cursor: pointer;
 }
 
