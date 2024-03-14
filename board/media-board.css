@@ -16,11 +16,13 @@
 
   .status-container {
     flex-wrap: wrap;
-    height: 120px;
   }
 }
 
 @media (max-width: 900px) {
+  body {
+    align-content: unset;
+  }
   .board {
     padding: 10px 20px 20px 20px;
     align-items: center;

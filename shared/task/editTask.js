@@ -151,6 +151,8 @@ function takePrio(prio) {
 
 /** checks if every necessary field is filled */
 function mustFields() {
+  closeCategoryList();
+  closeAssignList();
   if (!category && !currentPrio) {
     mustFieldsWithoutBoth();
   }
@@ -310,7 +312,6 @@ function openAssignToList() {
 
 /** toggle "assign to" list */
 function toggleAssignList() {
-  console.log("toggle")
   if (document.getElementById("AssignToList").classList.contains("d-none")) {
     renderAssignToList();
     document.getElementById("AssignToList").classList.remove("d-none"); 
@@ -325,6 +326,8 @@ function toggleAssignList() {
 /** close "category" list */
 function closeCategoryList() {
   document.getElementById("categoryListContainer").innerHTML = closeCategoryListHtml();
+  if (document.getElementById("colorContainer"))
+    document.getElementById("colorContainer").innerHTML = ''
   if (category != undefined) {
     document.getElementById("colorContainer").innerHTML += `<div class="${color} color-container"></div>`;
     document.getElementById("category").value = `${category}`;

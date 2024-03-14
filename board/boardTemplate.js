@@ -1,6 +1,6 @@
 function taskCardHtml() {
   return /*html*/ `
-      <div draggable="true" ondragstart="startDragging(${currentTask['id']})" class="task-card" 
+      <div draggable="true" ondragstart="startDragging('${currentTask['id']}')" class="task-card" 
       id="${currentTask['id']}" onclick="openCard('${currentTask['id']}')">
       <div id="task-card-move-menu-${currentTask['id']}" class='task-card-move-menu d-none'>
             <div class="task-card-move-menu-headline">

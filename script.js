@@ -19,7 +19,6 @@ async function getDataFromBackend() {
 
 async function setCategoriesToBackend(categories) {
     await backend.setItem("categories", JSON.stringify(categories));
-    console.log(await JSON.parse(await backend.getItem('categories')));
 }
 
 async function includeHTMLLogin() {
@@ -55,7 +54,6 @@ async function includeHTML() {
 async function changeProfileImage() {
     let profileImage = document.getElementById('profileImage');
     let userImg = await JSON.parse(localStorage.getItem("user")) || [];
-    console.log(profileImage.innerHTML)
     profileImage.innerHTML = `${userImg["firstName"].charAt(0).toUpperCase()}${userImg["surname"].charAt(0).toUpperCase()}`;
     document.getElementById('profileImage').style.background = `${userImg["background"]}`;
 }
